@@ -3,20 +3,7 @@ DROP DATABASE IF EXISTS sundial;
 -- Creates the "blogger" database --
 CREATE DATABASE sundial;
 
-
-CREATE TABLE time
-(
-	id int NOT NULL AUTO_INCREMENT,
-	project_id varchar(255) NOT NULL,
-	timeIn DATETIME NOT NULL,
-    timeIN timestamp default current_timestamp NOT NULL,
-    timeOut timestamp default current_timestamp NOT NULL,
-	FOREIGN Key;
-	PRIMARY KEY (id)
-   
-    
-);
-
+USE sundial;
 CREATE TABLE projects
 (
 	id int NOT NULL AUTO_INCREMENT,
@@ -24,3 +11,16 @@ CREATE TABLE projects
 	project__billing_id varchar(255) NOT NULL,
 	PRIMARY KEY (id)
 );
+
+CREATE TABLE time
+(
+	id int NOT NULL AUTO_INCREMENT,
+	project_id int NOT NULL,
+    timeIN timestamp default current_timestamp NOT NULL,
+    timeOut timestamp default current_timestamp NOT NULL,
+	PRIMARY KEY (id),
+    FOREIGN KEY (project_id) REFERENCES projects(id)
+   
+    
+);
+
