@@ -19,20 +19,20 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-  Instance.associate = function(models) {
-    // We're saying that a Post should belong to an Author
-    // A Post can't be created without an Author due to the foreign key constraint
-    Instance.belongsTo(models.User, {
-      foreignKey: {
-        allowNull: false
-      }
-    });
-    Instance.belongsTo(models.Projects, {
-      foreignKey: {
-        allowNull: false
-      }
-    });
-  };
+  // Instance.associate = function(models) {
+  //   // We're saying that a Post should belong to an Author
+  //   // A Post can't be created without an Author due to the foreign key constraint
+  //   Instance.belongsTo(models.User, {
+  //     foreignKey: {
+  //       allowNull: false
+  //     }
+  //   });
+  //   Instance.belongsTo(models.Projects, {
+  //     foreignKey: {
+  //       allowNull: false
+  //     }
+  //   });
+  // };
 
   return Instance;
 };
