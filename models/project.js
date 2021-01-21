@@ -12,10 +12,9 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   Project.associate = function(models) {
-    //   // Associating User with Instances
-    //   // When an Author is deleted, also delete any associated Posts
-    Project.belongsTo(models.User, {});
-    //   Project.hasMany(models.Instance, {});
+    Project.hasMany(models.Instance, {
+      onDelete: "cascade"
+    });
   };
 
   return Project;
