@@ -18,4 +18,13 @@ router.get("/", (req, res) => {
   });
 });
 
+router.post("/api/newUser",(req,res)=>{
+  db.User.create({
+    firstName:req.body.firstName,
+    lastName:req.body.lastName,
+  }).then(()=>{
+    res.status(200);
+  })
+})
+
 module.exports = router;
