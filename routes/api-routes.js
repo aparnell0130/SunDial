@@ -17,7 +17,19 @@ router.get("/", (req, res) => {
     res.render("index", { users: usersObj.names });
   });
 });
-
+router.get("/api/users", (req, res) => {
+  db.User.findAll({}).then(users => {
+    const usersObj = {
+      names: users.map(data => {
+        return {
+          firstName: data.firstName,
+          lastName: data.lastName
+        };
+      })
+    };
+    res.json({ users: usersObj.names });
+  });
+});
 router.post("/api/newUser",(req,res)=>{
   db.User.create({
     firstName:req.body.firstName,
