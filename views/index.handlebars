@@ -26,8 +26,9 @@
 </ul>
 
 <!-- Modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">New User</button>
-
+<div class="text-center"> 
+  <button class="col-12" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Create Profile</button>
+  </div>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -41,24 +42,21 @@
         <form>
           <div class="form-group">
             <label for="first-name" class="col-form-label">First Name:</label>
-            <input type="text" class="form-control" id="first-name">
+            <input type="text" class="form-control" id="first_name">
           </div>
          <div class="form-group">
             <label for="last-name" class="col-form-label">Last Name:</label>
-            <input type="text" class="form-control" id="last-name">
+            <input type="text" class="form-control" id="last_name">
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Submit</button>
+        <button id="user-submit" type="button" class="btn btn-primary">Submit</button>
       </div>
     </div>
   </div>
 </div>
-
-
-
 
 {{!-- <script>
 $('#myModal').on('shown.bs.modal', function () {
@@ -136,4 +134,4 @@ $('#myModal').on('shown.bs.modal', function () {
     </div>
 </body>
 
-</html> --}}
+</html>
