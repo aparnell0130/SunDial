@@ -3,7 +3,7 @@ const db = require("../models");
 const express = require("express");
 
 const router = express.Router();
-
+//I THINK THIS IS AN HTML ROUTE AND SHOULD BE MOVED TO THE HTML-ROUTES.JS FILE
 router.get("/", (req, res) => {
   db.User.findAll({}).then(users => {
     const usersObj = {
@@ -17,6 +17,22 @@ router.get("/", (req, res) => {
     res.render("index", { users: usersObj.names });
   });
 });
+// THE GET ROUTE BELOW IS DAN TRYING TO RENDER THE SHIFT.HANDLEBAR PAGE
+router.get("/shift", (req, res) => {
+  db.User.findAll({}).then(users => {
+    const usersObj = {
+      names: users.map(data => {
+        return {
+          firstName: data.firstName,
+          lastName: data.lastName
+        };
+      })
+    };
+    res.render("shift", { users: usersObj.names });
+  });
+});
+
+
 router.get("/api/users", (req, res) => {
   db.User.findAll({}).then(users => {
     const usersObj = {
