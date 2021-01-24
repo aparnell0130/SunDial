@@ -32,7 +32,6 @@ router.get("/shift", (req, res) => {
   });
 });
 
-
 router.get("/api/users", (req, res) => {
   db.User.findAll({}).then(users => {
     const usersObj = {
