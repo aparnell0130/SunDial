@@ -1,14 +1,36 @@
-// Requiring path to so we can use relative routes to our HTML files
-const path = require("path");
+// eslint-disable-next-line no-unused-vars
+const db = require("../models");
+const express = require("express");
 
-module.exports = function(app) {
-  app.get("/", (req, res) => {
-    res.sendFile(
-      path.join(__dirname, "../public/assets/views/index.handlebars")
-    );
+const router = express.Router();
+//I THINK THIS IS AN HTML ROUTE AND SHOULD BE MOVED TO THE HTML-ROUTES.JS FILE
+router.get("/", (req, res) => {
+  db.User.findAll({}).then(users => {
+    const usersObj = {
+      names: users.map(data => {
+        return {
+          id: data.id,
+          firstName: data.firstName,
+          lastName: data.lastName
+        };
+      })
+    };
+    res.render("index", { users: usersObj.names });
   });
+});
 
-  app.get("/shift", (req, res) => {
-    res.render("shift", {});
+router.get("/shift", (req, res) => {
+  db.User.findAll({}).then(users => {
+    const usersObj = {
+      names: users.map(data => {
+        return {
+          firstName: data.firstName,
+          lastName: data.lastName
+        };
+      })
+    };
+    res.render("shift", { users: usersObj.names });
   });
-};
+});
+
+module.exports = router;
