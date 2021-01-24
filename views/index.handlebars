@@ -12,67 +12,11 @@
   </nav>
 </div>
 
-
-<h2>Select User!</h2>
-
-<ul>
-  {{#each users}}
-
-  <p>
-    {{firstName}}
-  </p>
-
-  {{/each}}
-</ul>
-
-<!-- Modal -->
-<div class="text-center"> 
-  <button class="col-12" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Create Profile</button>
-  </div>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-         <h5 class="modal-title" id="exampleModalLabel">Welcome to Sundial!</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="first-name" class="col-form-label">First Name:</label>
-            <input type="text" class="form-control" id="first_name">
-          </div>
-         <div class="form-group">
-            <label for="last-name" class="col-form-label">Last Name:</label>
-            <input type="text" class="form-control" id="last_name">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button id="user-submit" type="button" class="btn btn-primary">Submit</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-{{!-- <script>
-$('#myModal').on('shown.bs.modal', function () {
-  $('#myInput').trigger('focus')
-})
-</script> --}}
-
-{{!--
-
 <body>
-
   <div class="jumbotron jumbotron-fluid">
     <div class="container">
       <h1>SunDial</h1>
     </div>
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Navbar</a>
@@ -100,38 +44,54 @@ $('#myModal').on('shown.bs.modal', function () {
     <div class="container">
       <div class="row">
         <div class="col">
-          {{!-- select user --}}
           <div class="card" style="width: 18rem;">
             <div class="card-header">
               SELECT USER
             </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">Aaron</li>
-              <li class="list-group-item">Carlos</li>
-              <li class="list-group-item">Keenan</li>
-              <li class="list-group-item">Michael</li>
-              <li class="list-group-item">Danny</li>
-            </ul>
-          </div>
-        </div>
-        <div class="col">
-          {{!-- create new user --}}
-          <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="card-title">Create New User</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
-            </div>
+              <ul class="list-group list-group-flush">
+                {{#each users}}
+                <li class="list-group-item">{{firstName}} {{lastName}}</li>
+                {{/each}}
+              </ul>
+  <!-- START Modal -->
+              <div class="text-center"> 
+                <button class="col-12" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Create Profile</button>
+              </div>
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Welcome to Sundial!</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="first-name" class="col-form-label">First Name:</label>
+                          <input type="text" class="form-control" id="first_name">
+                        </div>
+                        <div class="form-group">
+                          <label for="last-name" class="col-form-label">Last Name:</label>
+                          <input type="text" class="form-control" id="last_name">
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button id="user-submit" type="button" class="btn btn-primary">Submit</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- END Modal -->
+
           </div>
         </div>
       </div>
-
-
-
     </div>
+
 </body>
 
 </html>
