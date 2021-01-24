@@ -26,7 +26,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/projects">Projects</a>
@@ -39,14 +39,49 @@
       </div>
     </nav>
 
+<button type="button" class="btn btn-success">START SHIFT</button>
+
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">PROJECT NAME</th>
+      <th scope="col">TIME START</th>
+      <th scope="col">TIME END</th>
+      <th scope="col">TASK</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row"><div class="row g-3 align-items-center">
+  <div class="col-auto">
+    <label for="inputPassword6" class="col-form-label"></label>
+  </div>
+  <div class="col-auto">
+    <input id="project-form" class="form-control" >
+  </div>
+  <div class="col-auto">
+
+  </div>
+</div></th>
+      <td>12 PM (NOT DYNAMIC)</td>
+      <td>1 PM (NOT DYNAMIC) </td>
+      <td><button type="button" class="btn btn-danger">END TASK</button></td>
+    </tr>
+  </tbody>
+</table>
 
     <div class="container">
       <div class="row">
         <div class="col">
           <div class="card" style="width: 18rem;">
             <div class="card-header">
-              SELECT USER
+              TODAYS DATE
             </div>
+            </div>
+
+              
               <ul class="list-group list-group-flush">
                 {{#each users}}
                 <li class="list-group-item">{{firstName}} {{lastName}}</li>
