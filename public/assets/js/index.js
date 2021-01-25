@@ -2,6 +2,7 @@
 const userSubmitEl = $("#user-submit");
 console.log(userSubmitEl);
 console.log("test");
+const userListEl = $(".userListEl");
 
 $("#user-submit").on("click", event => {
   console.log($("#user-submit"));
@@ -23,4 +24,15 @@ $("#user-submit").on("click", event => {
   $.post("/api/newUser", newUser).then(() => {
     location.reload();
   });
+});
+
+//Functionality to redirect to shift page when selecting a user
+userListEl.on("click", event => {
+  event.preventDefault();
+  event.stopPropagation();
+  console.log(this);
+  const renderedUser = $(event.target).text();
+  console.log(renderedUser);
+
+  window.location.replace("/shift");
 });
