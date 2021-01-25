@@ -32,5 +32,20 @@ router.post("/api/newUser", (req, res) => {
       }
     });
 });
+router.post("/api/newProject", (req, res) => {
+  console.log(req.body);
+  db.Project.create({
+    projectNumber: req.body.projectNumber,
+    projectName: req.body.projectName
+  })
+    .then(newProject => {
+      res.json(newProject);
+    })
+    .catch(err => {
+      if (err) {
+        return res.status(500).json({ sucess: false });
+      }
+    });
+});
 
 module.exports = router;
