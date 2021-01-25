@@ -48,17 +48,17 @@ newProjectBtnEl.on("click", event => {
   });
 });
 
-const createTimeSpent = () => {
-  const timeSpent = $("#timeSpent");
-  const timeIn = $("tr")
-    .data("in")
-    .text();
-  const timeOut = $("tr")
-    .data("out")
-    .text();
+$(".timeSpent").each(function() {
+  const timeSpent = $(".timeSpent");
+  const timeIn = $(this)
+    .prev()
+    .prev()
+    .data("timein");
+  const timeOut = $(this)
+    .prev()
+    .data("timeout");
   console.log(timeIn, timeOut);
   const time1 = moment(timeIn.split(" ").join("T"));
   const time2 = moment(timeOut.split(" ").join("T"));
   timeSpent.text(time2.diff(time1, "hours", true));
-};
-createTimeSpent();
+});

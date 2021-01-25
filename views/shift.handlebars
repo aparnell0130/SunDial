@@ -46,9 +46,9 @@
           {{#each instances}}
         <tr>
           <td>{{projectName}}</td>
-          <td data-in="{{id}}">{{timeIn}}</td>
-          <td data-out="{{id}}">{{timeOut}}</td>
-          <td data-time="{{id}}"></td>
+          <td data-timein="{{timeIn}}">{{timeIn}}</td>
+          <td data-timeout="{{timeOut}}">{{timeOut}}</td>
+          <td class="timeSpent"></td>
         </tr>
           {{/each}}
       </tbody>
