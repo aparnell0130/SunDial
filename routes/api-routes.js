@@ -17,14 +17,14 @@ router.get("/api/users", (req, res) => {
     res.json({ users: usersObj.names });
   });
 });
-router.post("/api/newUser", (req, res) => {
+router.post("/api/newProject", (req, res) => {
   console.log(req.body);
-  db.User.create({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName
+  db.Project.create({
+    projectNumber: req.body.projectNumber,
+    projectName: req.body.projectName
   })
-    .then(newUser => {
-      res.json(newUser);
+    .then(newProject => {
+      res.json(newProject);
     })
     .catch(err => {
       if (err) {
