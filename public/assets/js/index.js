@@ -1,11 +1,8 @@
 // DOM ELEMENTS:
 const userSubmitEl = $("#user-submit");
-console.log(userSubmitEl);
-console.log("test");
-const userListEl = $(".userListEl");
+const userListEl = $(".userInfo");
 
-$("#user-submit").on("click", event => {
-  console.log($("#user-submit"));
+userSubmitEl.on("click", event => {
   event.preventDefault();
   //front end team to match id for submit button
   // Make a newChirp object
@@ -27,12 +24,20 @@ $("#user-submit").on("click", event => {
 });
 
 //Functionality to redirect to shift page when selecting a user
-userListEl.on("click", event => {
+userListEl.on("click", function(event) {
   event.preventDefault();
-  event.stopPropagation();
-  console.log(this);
-  const renderedUser = $(event.target).text();
-  console.log(renderedUser);
-
-  window.location.replace("/shift");
+  // event.stopPropagation();
+  // const renderedUser = $(event.target).text();
+  const userId = $(this).data("id");
+  console.log(userId);
+  $.get("/api/" + userId).then(data => {
+    // window.location.replace("/shift");
+    // console.log(data);
+    const userh1 = `<h1 id="${data.id}">
+                      ${data.firstName} ${data.lastName}
+                    </h1>`;
+    const head = $("#head");
+    head.append(userh1);
+    console.log(userh1, head);
+  });
 });
