@@ -6,7 +6,6 @@ const billingNumEl = $("#billingNum");
 const newProjectNameEl = $("#newProjectName");
 const newProjectBtnEl = $(".newProjectBtn");
 
-
 // console.log(newProjectBtnEl);
 
 const lineTimeEndEl = $(".lineTimeEndEl");
