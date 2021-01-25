@@ -17,6 +17,21 @@ router.get("/api/users", (req, res) => {
     res.json({ users: usersObj.names });
   });
 });
+router.post("/api/newUser", (req, res) => {
+  console.log(req.body);
+  db.User.create({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName
+  })
+    .then(newUser => {
+      res.json(newUser);
+    })
+    .catch(err => {
+      if (err) {
+        return res.status(500).json({ sucess: false });
+      }
+    });
+});
 router.post("/api/newProject", (req, res) => {
   console.log(req.body);
   db.Project.create({
