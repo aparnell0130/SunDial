@@ -71,11 +71,14 @@
                 </div>
                 <div class="col-auto">
                   <div class="btn-group">
-                    <!-- START Modal -->
+                    <!-- START MODAL COMPONENT -->
+                    {{!-- MODAL BUTTON START--}}
                     <div class="text-center">
                       <button type="button" class="btn btn-primary startButtonEl" data-toggle="modal"
                         data-target="#exampleModal" data-whatever="@getbootstrap">New</button>
                     </div>
+                    {{!-- MODAL BUTTON END--}}
+                    {{!-- ACTUAL MODAL START--}}
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                       aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog" role="document">
@@ -106,20 +109,29 @@
                         </div>
                       </div>
                     </div>
+                    {{!-- ACTUAL MODAL END--}}
                     <!-- END Modal -->
-                    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
-                      aria-haspopup="true" aria-expanded="false">
-                      Project History
-                    </button>
-                    <div class="dropdown-menu">
-                      <ul>
-                        {{#each projects}}
-                        <li id={{id}}>
-                          {{projectName}}
-                        </li>
-                        {{/each}}
-                      </ul>
+
+                    {{!-- PROJECT HISTORY DROPDOWN --}}
+                      {{!-- BUTTONS WITH DROPDOWNS START --}}
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Project History</button>
+                        <div class="dropdown-menu">
+                          
+                            <ul class = "projectDropDownListEl">
+                              {{#each projects}}
+                              <li class="dropdown-item" id={{id}}>
+                                {{projectName}}
+                              </li>
+                              {{/each}}
+                            </ul>
+                        </div>
+                      </div>
+                      <input type="text" class="form-control projectLineItem" aria-label="Text input with dropdown button">
                     </div>
+                      {{!-- BUTTONS WITH DROPDOWNS END --}}
+
                   </div>
                 </div>
                 <div class="col-auto">

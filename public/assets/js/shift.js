@@ -5,7 +5,8 @@ const lineTimeStartEl = $(".lineTimeStartEl");
 const billingNumEl = $("#billingNum");
 const newProjectNameEl = $("#newProjectName");
 const newProjectBtnEl = $(".newProjectBtn");
-
+const projectDropDownListEl = $(".projectDropDownListEl");
+const projectLineItem = $(".projectLineItem");
 // console.log(newProjectBtnEl);
 
 const lineTimeEndEl = $(".lineTimeEndEl");
@@ -35,7 +36,6 @@ newProjectBtnEl.on("click", event => {
   // console.log($("#user-submit"));
   event.preventDefault();
   //front end team to match id for submit button
-  // Make a newChirp object
   const newProject = {
     projectNumber: billingNumEl.val().trim(),
     projectName: newProjectNameEl.val().trim()
@@ -61,4 +61,13 @@ $(".timeSpent").each(function() {
   const time2 = moment(timeOut.split(" ").join("T"));
   const timeSpent = time2.diff(time1, "hours", true);
   $(this).text(timeSpent.toFixed(2));
+});
+
+//FUNCTION TO POPULATE THE PROJECT INPUT FIELD FROM DROP DOWN
+projectDropDownListEl.on("click", event => {
+  event.preventDefault();
+  const renderedProjectName = $(event.target).text();
+  const renderedProjectID = $(event.target).attr("id");
+  projectLineItem.val(renderedProjectName.trim());
+  projectLineItem.attr("id", renderedProjectID);
 });

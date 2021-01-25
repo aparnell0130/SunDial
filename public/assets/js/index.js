@@ -5,7 +5,6 @@ const userListEl = $(".userInfo");
 userSubmitEl.on("click", event => {
   event.preventDefault();
   //front end team to match id for submit button
-  // Make a newChirp object
   const newUser = {
     firstName: $("#first_name")
       .val()
