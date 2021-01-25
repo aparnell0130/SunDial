@@ -32,5 +32,4 @@ userListEl.on("click", event => {
   console.log(renderedUser);
 
   window.location.replace("/shift");
-  $.get()
 });
