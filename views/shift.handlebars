@@ -39,7 +39,7 @@
       </div>
     </nav>
 
-<button type="button" class="btn btn-success">START SHIFT</button>
+<button type="button" class="btn btn-success startButtonEl">START SHIFT</button>
 
 
 
@@ -59,39 +59,20 @@
     <label for="inputPassword6" class="col-form-label"></label>
   </div>
   <div class="col-auto">
-    <input id="project-form" class="form-control" >
+    <input id="project-form" class="form-control " >
   </div>
   <div class="col-auto">
 
   </div>
 </div></th>
-      <td>12 PM (NOT DYNAMIC)</td>
-      <td>1 PM (NOT DYNAMIC) </td>
-      <td><button type="button" class="btn btn-danger">END TASK</button></td>
+      <td class ="lineTimeStartEl">Start Time</td>
+      <td class ="lineTimeEndEl"> --- </td>
+      <td><button type="button" class="btn btn-danger endButtonEl">END TASK</button></td>
     </tr>
   </tbody>
 </table>
 
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <div class="card" style="width: 18rem;">
-            <div class="card-header">
-              TODAYS DATE
-            </div>
-            </div>
-
-              
-              <ul class="list-group list-group-flush">
-                {{#each users}}
-                <li class="list-group-item">{{firstName}} {{lastName}}</li>
-                {{/each}}
-              </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
+  
 </body>
 
 </html>
