@@ -20,16 +20,20 @@ router.get("/", (req, res) => {
 });
 
 router.get("/shift", (req, res) => {
-  db.User.findAll({}).then(users => {
-    const usersObj = {
-      names: users.map(data => {
+  db.Instance.findAll({
+    where: {},
+    include: [db.Project]
+  }).then(instances => {
+    const instancesObj = {
+      instance: instances.map(data => {
         return {
-          firstName: data.firstName,
-          lastName: data.lastName
+          projectName: data.projectName,
+          timeIn: data.timeIn,
+          timeOut: data.timeOut
         };
       })
     };
-    res.render("shift", { users: usersObj.names });
+    res.render("shift", { users: instancesObj.instance });
   });
 });
 
