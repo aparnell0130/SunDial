@@ -49,7 +49,6 @@ newProjectBtnEl.on("click", event => {
 });
 
 $(".timeSpent").each(function() {
-  const timeSpent = $(".timeSpent");
   const timeIn = $(this)
     .prev()
     .prev()
@@ -60,5 +59,5 @@ $(".timeSpent").each(function() {
   console.log(timeIn, timeOut);
   const time1 = moment(timeIn.split(" ").join("T"));
   const time2 = moment(timeOut.split(" ").join("T"));
-  timeSpent.text(time2.diff(time1, "hours", true));
+  $(this).text(time2.diff(time1, "hours", true));
 });
