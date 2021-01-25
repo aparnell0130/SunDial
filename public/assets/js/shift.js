@@ -5,7 +5,8 @@ const lineTimeStartEl = $(".lineTimeStartEl");
 const billingNumEl = $("#billingNum");
 const newProjectNameEl = $("#newProjectName");
 const newProjectBtnEl = $(".newProjectBtn");
-
+const projectDropDownListEl = $(".projectDropDownListEl");
+const projectLineItem = $(".projectLineItem");
 // console.log(newProjectBtnEl);
 
 const lineTimeEndEl = $(".lineTimeEndEl");
@@ -61,4 +62,16 @@ $(".timeSpent").each(function() {
   const time2 = moment(timeOut.split(" ").join("T"));
   const timeSpent = time2.diff(time1, "hours", true);
   $(this).text(timeSpent.toFixed(2));
+});
+
+//FUNCTION TO POPULATE THE PROJECT INPUT FIELD FROM DROP DOWN
+projectDropDownListEl.on("click", event => {
+  event.preventDefault();
+  const renderedProject = $(event.target).text();
+  console.log(renderedProject);
+  projectLineItem.val(renderedProject.trim());
+
+  // $.post("/api/newProject", newProject).then(() => {
+  //   location.reload();
+  // });
 });
