@@ -28,12 +28,14 @@ router.get("/shift", (req, res) => {
       instance: instances.map(data => {
         return {
           projectName: data.projectName,
+          ProjectId: data.ProjectId,
           timeIn: data.timeIn,
           timeOut: data.timeOut
         };
       })
     };
-    res.render("shift", { users: instancesObj.instance });
+    console.log(instancesObj)
+    res.render("shift", { instances: instancesObj.instance });
   });
 });
 

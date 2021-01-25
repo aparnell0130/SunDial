@@ -69,6 +69,26 @@
       <!-- END Modal -->
     </div>
 
+<table class="table">
+      <thead>
+        <tr>
+          <th scope="col">PROJECT NAME</th>
+          <th scope="col">TIME START</th>
+          <th scope="col">TIME END</th>
+          <th scope="col">TIME SPENT</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          {{#each instances}}
+          <td>{{ProjectId}}</td>
+          <td> {{timeIn}} </td>
+          <td>{{timeOut}}</td>
+          <td>{{timeOut-timeIn}}</td>
+        
+          {{/each}}
+        </tr>
+      </tbody>
 
     <table class="table">
       <thead>
