@@ -59,5 +59,6 @@ $(".timeSpent").each(function() {
   console.log(timeIn, timeOut);
   const time1 = moment(timeIn.split(" ").join("T"));
   const time2 = moment(timeOut.split(" ").join("T"));
-  $(this).text(time2.diff(time1, "hours", true));
+  const timeSpent = time2.diff(time1, "hours", true);
+  $(this).text(timeSpent.toFixed(2));
 });
