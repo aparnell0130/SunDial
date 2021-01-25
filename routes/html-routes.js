@@ -43,6 +43,7 @@ router.get("/shift", (req, res) => {
         const instancesObj = {
           instance: instances.map(data => {
             return {
+              id: data.id,
               projectName: data.Project.projectName,
               ProjectId: data.ProjectId,
               timeIn: data.timeIn,

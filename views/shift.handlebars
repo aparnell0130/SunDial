@@ -42,16 +42,15 @@
           <th scope="col">TIME SPENT</th>
         </tr>
       </thead>
-      <tbody>
-        <tr id="instanceData">
+      <tbody id="instanceData">
           {{#each instances}}
+        <tr>
           <td>{{projectName}}</td>
-          <td id="timeIn">{{timeIn}}</td>
-          <td id="timeOut">{{timeOut}}</td>
-          <td id="timeSpent"></td>
-
-          {{/each}}
+          <td data-in="{{id}}">{{timeIn}}</td>
+          <td data-out="{{id}}">{{timeOut}}</td>
+          <td data-time="{{id}}"></td>
         </tr>
+          {{/each}}
       </tbody>
 
       <table class="table">

@@ -5,9 +5,8 @@ const lineTimeStartEl = $(".lineTimeStartEl");
 const billingNumEl = $("#billingNum");
 const newProjectNameEl = $("#newProjectName");
 const newProjectBtnEl = $(".newProjectBtn");
-const timeSpent = $("#timeSpent");
-const timeIn = $("#timeIn").text();
-const timeOut = $("#timeOut").text();
+
+
 // console.log(newProjectBtnEl);
 
 const lineTimeEndEl = $(".lineTimeEndEl");
@@ -51,6 +50,14 @@ newProjectBtnEl.on("click", event => {
 });
 
 const createTimeSpent = () => {
+  const timeSpent = $("#timeSpent");
+  const timeIn = $("tr")
+    .data("in")
+    .text();
+  const timeOut = $("tr")
+    .data("out")
+    .text();
+  console.log(timeIn, timeOut);
   const time1 = moment(timeIn.split(" ").join("T"));
   const time2 = moment(timeOut.split(" ").join("T"));
   timeSpent.text(time2.diff(time1, "hours", true));
