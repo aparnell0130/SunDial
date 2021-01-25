@@ -47,5 +47,17 @@ router.post("/api/newProject", (req, res) => {
       }
     });
 });
-
+router.get("/api/projects", (req, res) => {
+  db.User.findAll({}).then(projects => {
+    const projectsObj = {
+      projects: projects.map(data => {
+        return {
+          projectName: data.projectName,
+          projectNumber: data.projectNumber
+        };
+      })
+    };
+    res.json({ projects: projectsObj.projects });
+  });
+});
 module.exports = router;

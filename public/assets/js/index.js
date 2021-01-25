@@ -27,7 +27,6 @@ $("#user-submit").on("click", event => {
 });
 
 //Functionality to redirect to shift page when selecting a user
-
 userListEl.on("click", event => {
   event.preventDefault();
   event.stopPropagation();

@@ -20,17 +20,36 @@ router.get("/", (req, res) => {
 });
 
 router.get("/shift", (req, res) => {
-  db.User.findAll({}).then(users => {
-    const usersObj = {
-      names: users.map(data => {
+  db.Instance.findAll({
+    where: {},
+    include: [db.Project]
+  }).then(instances => {
+    const instancesObj = {
+      instance: instances.map(data => {
         return {
-          firstName: data.firstName,
-          lastName: data.lastName
+          projectName: data.projectName,
+          ProjectId: data.ProjectId,
+          timeIn: data.timeIn,
+          timeOut: data.timeOut
         };
       })
     };
-    res.render("shift", { users: usersObj.names });
+    console.log(instancesObj);
+    res.render("shift", { instances: instancesObj.instance });
   });
 });
-
+router.get("/shift", (req, res) => {
+  db.User.findAll({}).then(projects => {
+    const projectsObj = {
+      projects: projects.map(data => {
+        return {
+          id: data.id,
+          projectName: data.projectName,
+          projectNumber: data.projectNumber
+        };
+      })
+    };
+    res.render("shift", { projects: projectsObj.projects });
+  });
+});
 module.exports = router;
