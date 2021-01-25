@@ -43,12 +43,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr id="instanceData">
           {{#each instances}}
           <td>{{projectName}}</td>
-          <td> {{timeIn}} </td>
-          <td>{{timeOut}}</td>
-          <td>{{timeOut-timeIn}}</td>
+          <td id="timeIn">{{timeIn}}</td>
+          <td id="timeOut">{{timeOut}}</td>
+          <td id="timeSpent"></td>
 
           {{/each}}
         </tr>
