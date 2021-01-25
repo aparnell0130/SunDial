@@ -33,7 +33,7 @@ router.get("/shift", (req, res) => {
             };
           })
         };
-        console.log(projectsObj);
+        // console.log(projectsObj);
         return projectsObj.projects;
       });
       const instances = await db.Instance.findAll({
@@ -43,15 +43,15 @@ router.get("/shift", (req, res) => {
         const instancesObj = {
           instance: instances.map(data => {
             return {
-              projectName: data.projectName,
+              projectName: data.Project.projectName,
               ProjectId: data.ProjectId,
               timeIn: data.timeIn,
               timeOut: data.timeOut
             };
           })
         };
+        console.log(instancesObj);
         return instancesObj.instance;
-        // console.log(instancesObj);
         // res.render("shift", { instances: instancesObj.instance });
       });
       res.render("shift", { projects: projects, instances: instances });

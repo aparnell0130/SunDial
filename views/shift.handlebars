@@ -45,7 +45,7 @@
       <tbody>
         <tr>
           {{#each instances}}
-          <td>{{ProjectId}}</td>
+          <td>{{projectName}}</td>
           <td> {{timeIn}} </td>
           <td>{{timeOut}}</td>
           <td>{{timeOut-timeIn}}</td>
@@ -115,7 +115,7 @@
                     <div class="dropdown-menu">
                       <ul>
                         {{#each projects}}
-                        <li>
+                        <li id={{id}}>
                           {{projectName}}
                         </li>
                         {{/each}}
