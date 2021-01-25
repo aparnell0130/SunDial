@@ -39,7 +39,7 @@ router.get("/shift", (req, res) => {
   });
 });
 router.get("/shift", (req, res) => {
-  db.User.findAll({}).then(projects => {
+  db.Project.findAll({}).then(projects => {
     const projectsObj = {
       projects: projects.map(data => {
         return {
