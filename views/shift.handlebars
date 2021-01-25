@@ -1,12 +1,22 @@
 <div class="pos-f-t">
   <div class="collapse" id="navbarToggleExternalContent">
     <div class="bg-dark p-4">
-      <h4 class="text-white">Collapsed content</h4>
-      <span class="text-muted">Toggleable via the navbar brand.</span>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/shift">Shift</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/projects">Projects</a>
+        </li>
+      </ul>
     </div>
   </div>
   <nav class="navbar navbar-dark bg-dark">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
+      aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
   </nav>
@@ -14,65 +24,84 @@
 
 <body>
   <div class="jumbotron jumbotron-fluid">
+
     <div class="container">
       <h1>SunDial SHIFTS</h1>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/projects">Projects</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/shift">Shift</a>
-            </li>
-          </ul>
+
+    <div class="container row">
+      <button type="button" class="mx-2 btn btn-success startButtonEl">START SHIFT</button>
+
+      <!-- START Modal -->
+      <div class="text-center">
+        <button type="button" class="btn btn-primary startButtonEl" data-toggle="modal" data-target="#exampleModal"
+          data-whatever="@getbootstrap">NEW PROJECT</button>
+      </div>
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Enter New Project Information</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="first-name" class="col-form-label">Billing #</label>
+                  <input type="text" class="form-control" id="first_name">
+                </div>
+                <div class="form-group">
+                  <label for="last-name" class="col-form-label">New Project Name:</label>
+                  <input type="text" class="form-control" id="last_name">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button id="user-submit" type="button" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
         </div>
       </div>
-    </nav>
-
-<button type="button" class="btn btn-success startButtonEl">START SHIFT</button>
-
+      <!-- END Modal -->
+    </div>
 
 
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">PROJECT NAME</th>
-      <th scope="col">TIME START</th>
-      <th scope="col">TIME END</th>
-      <th scope="col">TASK</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row"><div class="row g-3 align-items-center">
-  <div class="col-auto">
-    <label for="inputPassword6" class="col-form-label"></label>
-  </div>
-  <div class="col-auto">
-    <input id="project-form" class="form-control " >
-  </div>
-  <div class="col-auto">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">PROJECT NAME</th>
+          <th scope="col">TIME START</th>
+          <th scope="col">TIME END</th>
+          <th scope="col">TASK</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">
+            <div class="row g-3 align-items-center">
+              <div class="col-auto">
+                <label for="inputPassword6" class="col-form-label"></label>
+              </div>
+              <div class="col-auto">
+                <input id="project-form" class="form-control ">
+              </div>
+              <div class="col-auto">
 
-  </div>
-</div></th>
-      <td class ="lineTimeStartEl">Start Time</td>
-      <td class ="lineTimeEndEl"> --- </td>
-      <td><button type="button" class="btn btn-danger endButtonEl">END TASK</button></td>
-    </tr>
-  </tbody>
-</table>
+              </div>
+            </div>
+          </th>
+          <td class="lineTimeStartEl">Start Time</td>
+          <td class="lineTimeEndEl"> --- </td>
+          <td><button type="button" class="btn btn-danger endButtonEl">END TASK</button></td>
+        </tr>
+      </tbody>
+    </table>
 
-  
+
 </body>
 
 </html>
