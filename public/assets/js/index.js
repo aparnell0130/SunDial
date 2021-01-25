@@ -1,14 +1,11 @@
 // DOM ELEMENTS:
 const userSubmitEl = $("#user-submit");
-console.log(userSubmitEl);
-console.log("test");
 const userListEl = $(".userListEl");
 
-$("#user-submit").on("click", event => {
-  console.log($("#user-submit"));
+userSubmitEl.on("click", event => {
+  // console.log($("#user-submit"));
   event.preventDefault();
   //front end team to match id for submit button
-  // Make a newChirp object
   const newUser = {
     firstName: $("#first_name")
       .val()

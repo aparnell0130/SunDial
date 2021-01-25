@@ -36,7 +36,6 @@ newProjectBtnEl.on("click", event => {
   // console.log($("#user-submit"));
   event.preventDefault();
   //front end team to match id for submit button
-  // Make a newChirp object
   const newProject = {
     projectNumber: billingNumEl.val().trim(),
     projectName: newProjectNameEl.val().trim()
@@ -67,11 +66,8 @@ $(".timeSpent").each(function() {
 //FUNCTION TO POPULATE THE PROJECT INPUT FIELD FROM DROP DOWN
 projectDropDownListEl.on("click", event => {
   event.preventDefault();
-  const renderedProject = $(event.target).text();
-  console.log(renderedProject);
-  projectLineItem.val(renderedProject.trim());
-
-  // $.post("/api/newProject", newProject).then(() => {
-  //   location.reload();
-  // });
+  const renderedProjectName = $(event.target).text();
+  const renderedProjectID = $(event.target).attr("id");
+  projectLineItem.val(renderedProjectName.trim());
+  projectLineItem.attr("id", renderedProjectID);
 });
