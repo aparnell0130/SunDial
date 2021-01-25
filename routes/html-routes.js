@@ -34,9 +34,22 @@ router.get("/shift", (req, res) => {
         };
       })
     };
-    console.log(instancesObj)
+    console.log(instancesObj);
     res.render("shift", { instances: instancesObj.instance });
   });
 });
-
+router.get("/shift", (req, res) => {
+  db.User.findAll({}).then(projects => {
+    const projectsObj = {
+      projects: projects.map(data => {
+        return {
+          id: data.id,
+          projectName: data.projectName,
+          projectNumber: data.projectNumber
+        };
+      })
+    };
+    res.render("shift", { projects: projectsObj.projects });
+  });
+});
 module.exports = router;
