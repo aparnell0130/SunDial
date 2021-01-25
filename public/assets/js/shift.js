@@ -4,7 +4,8 @@ const endButtonEl = $(".endButtonEl");
 const lineTimeStartEl = $(".lineTimeStartEl");
 const billingNumEl = $("#billingNum");
 const newProjectNameEl = $("#newProjectName");
-const newProjectBtnEl = $("#newProjectBtn");
+const newProjectBtnEl = $(".newProjectBtn");
+// console.log(newProjectBtnEl);
 
 const lineTimeEndEl = $(".lineTimeEndEl");
 // console.log(lineTimeEndEl);
