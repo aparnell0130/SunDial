@@ -15,41 +15,51 @@ router.get("/", (req, res) => {
         };
       })
     };
+    console.log(usersObj);
     res.render("index", { users: usersObj.names });
   });
 });
+router.get("/shift", (req, res) => {
+  renderShift();
+  async function renderShift() {
+    try {
+      const projects = await db.Project.findAll({}).then(projects => {
+        const projectsObj = {
+          projects: projects.map(data => {
+            return {
+              id: data.id,
+              projectName: data.projectName,
+              projectNumber: data.projectNumber
+            };
+          })
+        };
+        // console.log(projectsObj);
+        return projectsObj.projects;
+      });
+      const instances = await db.Instance.findAll({
+        where: {},
+        include: [db.Project]
+      }).then(instances => {
+        const instancesObj = {
+          instance: instances.map(data => {
+            return {
+              id: data.id,
+              projectName: data.Project.projectName,
+              ProjectId: data.ProjectId,
+              timeIn: data.timeIn,
+              timeOut: data.timeOut
+            };
+          })
+        };
+        console.log(instancesObj);
+        return instancesObj.instance;
+        // res.render("shift", { instances: instancesObj.instance });
+      });
+      res.render("shift", { projects: projects, instances: instances });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+});
 
-router.get("/shift", (req, res) => {
-  db.Instance.findAll({
-    where: {},
-    include: [db.Project]
-  }).then(instances => {
-    const instancesObj = {
-      instance: instances.map(data => {
-        return {
-          projectName: data.projectName,
-          ProjectId: data.ProjectId,
-          timeIn: data.timeIn,
-          timeOut: data.timeOut
-        };
-      })
-    };
-    console.log(instancesObj);
-    res.render("shift", { instances: instancesObj.instance });
-  });
-});
-router.get("/shift", (req, res) => {
-  db.Project.findAll({}).then(projects => {
-    const projectsObj = {
-      projects: projects.map(data => {
-        return {
-          id: data.id,
-          projectName: data.projectName,
-          projectNumber: data.projectNumber
-        };
-      })
-    };
-    res.render("shift", { projects: projectsObj.projects });
-  });
-});
 module.exports = router;

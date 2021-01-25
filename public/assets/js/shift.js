@@ -5,6 +5,7 @@ const lineTimeStartEl = $(".lineTimeStartEl");
 const billingNumEl = $("#billingNum");
 const newProjectNameEl = $("#newProjectName");
 const newProjectBtnEl = $(".newProjectBtn");
+
 // console.log(newProjectBtnEl);
 
 const lineTimeEndEl = $(".lineTimeEndEl");
@@ -45,4 +46,19 @@ newProjectBtnEl.on("click", event => {
   $.post("/api/newProject", newProject).then(() => {
     location.reload();
   });
+});
+
+$(".timeSpent").each(function() {
+  const timeIn = $(this)
+    .prev()
+    .prev()
+    .data("timein");
+  const timeOut = $(this)
+    .prev()
+    .data("timeout");
+  console.log(timeIn, timeOut);
+  const time1 = moment(timeIn.split(" ").join("T"));
+  const time2 = moment(timeOut.split(" ").join("T"));
+  const timeSpent = time2.diff(time1, "hours", true);
+  $(this).text(timeSpent.toFixed(2));
 });
