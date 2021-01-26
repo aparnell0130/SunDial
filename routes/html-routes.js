@@ -20,6 +20,8 @@ router.get("/", (req, res) => {
   });
 });
 router.get("/shift", (req, res) => {
+  const userId = req.query.userId;
+  console.log(userId);
   renderShift();
   async function renderShift() {
     try {
@@ -38,7 +40,7 @@ router.get("/shift", (req, res) => {
       });
       const instances = await db.Instance.findAll({
         where: {},
-        include: [db.Project]
+        include: [db.Project, db.User]
       }).then(instances => {
         const instancesObj = {
           instance: instances.map(data => {
@@ -46,6 +48,8 @@ router.get("/shift", (req, res) => {
               id: data.id,
               projectName: data.Project.projectName,
               ProjectId: data.ProjectId,
+              UserId: data.UserId,
+              firstName: data.User.firstName,
               timeIn: data.timeIn,
               timeOut: data.timeOut
             };

@@ -29,14 +29,5 @@ userListEl.on("click", function(event) {
   // const renderedUser = $(event.target).text();
   const userId = $(this).data("id");
   console.log(userId);
-  $.get("/api/" + userId).then(data => {
-    // window.location.replace("/shift");
-    // console.log(data);
-    const userh1 = `<h1 id="${data.id}">
-                      ${data.firstName} ${data.lastName}
-                    </h1>`;
-    const head = $("#head");
-    head.append(userh1);
-    console.log(userh1, head);
-  });
+  window.location.replace("/shift?userId=" + userId);
 });
