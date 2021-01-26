@@ -54,7 +54,7 @@ router.get("/shift", (req, res) => {
             };
           })
         };
-        console.log(instancesObj);
+        console.log("/shift:", instancesObj);
         return instancesObj.instance;
         // res.render("shift", { instances: instancesObj.instance });
       });

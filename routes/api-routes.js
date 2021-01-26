@@ -44,7 +44,7 @@ router.post("/api/newUser", (req, res) => {
     });
 });
 router.post("/api/newProject", (req, res) => {
-  console.log(req.body);
+  console.log("/api/newProject", req.body);
   db.Project.create({
     projectNumber: req.body.projectNumber,
     projectName: req.body.projectName
@@ -54,7 +54,7 @@ router.post("/api/newProject", (req, res) => {
     })
     .catch(err => {
       if (err) {
-        return res.status(500).json({ sucess: false });
+        return res.status(500).json({ success: false });
       }
     });
 });
@@ -70,5 +70,24 @@ router.get("/api/projects", (req, res) => {
     };
     res.json({ projects: projectsObj.projects });
   });
+});
+//INSTANCE POST REQUEST
+router.post("/api/newInstance", (req, res) => {
+  console.log(req.body);
+  db.Instance.create({
+    ProjectId: req.body.projectId, //keys must match mysql column tags
+    UserId: req.body.userId,
+    timeIn: req.body.timeIn,
+    timeOut: req.body.timeOut
+  })
+    .then(instanceData => {
+      res.json(instanceData);
+    })
+    .catch(err => {
+      console.log(err);
+      if (err) {
+        return res.status(500).json({ success: false });
+      }
+    });
 });
 module.exports = router;
