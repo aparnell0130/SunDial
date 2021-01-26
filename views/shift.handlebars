@@ -1,14 +1,38 @@
- {{>navbar}}
+{{>navbar}}
 
- 
-  <div class="jumbotron jumbotron-fluid">
 
-   
-{{>header title = "SunDial Shift"}}
+<div class="jumbotron jumbotron-fluid">
 
-    <div class="container row">
-      <button type="button" class="mx-2 btn btn-success startButtonEl">START SHIFT</button>
-    </div>
+  {{>header title = "SunDial Shift"}}
+
+  {{#each user}}
+  <h1 id={{id}} class="userIDEL">{{firstName}} {{lastName}}</h1>
+  {{/each}}
+
+
+  <div class="container row">
+    <button type="button" class="mx-2 btn btn-success startButtonEl">START SHIFT</button>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">PROJECT NAME</th>
+        <th scope="col">TIME START</th>
+        <th scope="col">TIME END</th>
+        <th scope="col">TIME SPENT</th>
+      </tr>
+    </thead>
+    <tbody id="instanceData">
+      {{#each instances}}
+      <tr>
+        <td>{{projectName}}</td>
+        <td data-timein="{{timeIn}}">{{timeIn}}</td>
+        <td data-timeout="{{timeOut}}">{{timeOut}}</td>
+        <td class="timeSpent"></td>
+      </tr>
+      {{/each}}
+    </tbody>
 
     <table class="table">
       <thead>
@@ -16,78 +40,58 @@
           <th scope="col">PROJECT NAME</th>
           <th scope="col">TIME START</th>
           <th scope="col">TIME END</th>
-          <th scope="col">TIME SPENT</th>
+          <th scope="col">TASK</th>
         </tr>
       </thead>
-      <tbody id="instanceData">
-          {{#each instances}}
+      <tbody>
         <tr>
-          <td>{{projectName}}</td>
-          <td data-timein="{{timeIn}}">{{timeIn}}</td>
-          <td data-timeout="{{timeOut}}">{{timeOut}}</td>
-          <td class="timeSpent"></td>
-        </tr>
-          {{/each}}
-      </tbody>
-
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">PROJECT NAME</th>
-            <th scope="col">TIME START</th>
-            <th scope="col">TIME END</th>
-            <th scope="col">TASK</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">
-              <div class="row g-3 align-items-center">
-                <div class="col-auto">
-                  <label for="inputPassword6" class="col-form-label"></label>
-                </div>
-                <div class="col-auto">
-                  <div class="btn-group">
-                    <!-- START MODAL COMPONENT -->
-                    {{!-- MODAL BUTTON START--}}
-                    <div class="text-center">
-                      <button type="button" class="btn btn-primary startButtonEl" data-toggle="modal"
-                        data-target="#exampleModal" data-whatever="@getbootstrap">New</button>
-                    </div>
-                    {{!-- MODAL BUTTON END--}}
-                    {{!-- ACTUAL MODAL START--}}
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                      aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Enter New Project Information</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <form>
-                              <div class="form-group">
-                                <label for="billingNum" class="col-form-label">Billing #</label>
-                                <input type="text" class="form-control" id="billingNum">
-                              </div>
-                              <div class="form-group">
-                                <label for="newProjectName" class="col-form-label">New Project Name:</label>
-                                <input type="text" class="form-control" id="newProjectName">
-                              </div>
-                            </form>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button id="project-submit" type="button"
-                              class="btn btn-primary newProjectBtn">Submit</button>
-                          </div>
+          <th scope="row">
+            <div class="row g-3 align-items-center">
+              <div class="col-auto">
+                <label for="inputPassword6" class="col-form-label"></label>
+              </div>
+              <div class="col-auto">
+                <div class="btn-group">
+                  <!-- START MODAL COMPONENT -->
+                  {{!-- MODAL BUTTON START--}}
+                  <div class="text-center">
+                    <button type="button" class="btn btn-primary startButtonEl" data-toggle="modal"
+                      data-target="#exampleModal" data-whatever="@getbootstrap">New</button>
+                  </div>
+                  {{!-- MODAL BUTTON END--}}
+                  {{!-- ACTUAL MODAL START--}}
+                  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Enter New Project Information</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <form>
+                            <div class="form-group">
+                              <label for="billingNum" class="col-form-label">Billing #</label>
+                              <input type="text" class="form-control" id="billingNum">
+                            </div>
+                            <div class="form-group">
+                              <label for="newProjectName" class="col-form-label">New Project Name:</label>
+                              <input type="text" class="form-control" id="newProjectName">
+                            </div>
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button id="project-submit" type="button"
+                            class="btn btn-primary newProjectBtn">Submit</button>
                         </div>
                       </div>
                     </div>
-                    {{!-- ACTUAL MODAL END--}}
-                    <!-- END Modal -->
+                  </div>
+                  {{!-- ACTUAL MODAL END--}}
+                  <!-- END Modal -->
 
                     {{!-- PROJECT HISTORY DROPDOWN --}}
                       {{!-- BUTTONS WITH DROPDOWNS START --}}
@@ -108,8 +112,8 @@
                     </div>
                       {{!-- BUTTONS WITH DROPDOWNS END --}}
                   </div>
-                </div>
-                <div class="col-auto">
+                  {{!-- BUTTONS WITH DROPDOWNS END --}}
+
                 </div>
               </div>
             </th>
@@ -122,7 +126,3 @@
   <div class="container row">
     <button type="button" class="mx-2 btn btn-danger endShiftButtonEl">END SHIFT</button>
   </div>
-
-</body>
-
-</html>

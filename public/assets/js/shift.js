@@ -2,6 +2,7 @@
 const startButtonEl = $(".startButtonEl");
 const endButtonEl = $(".endButtonEl");
 const lineTimeStartEl = $(".lineTimeStartEl");
+const lineTimeEndEl = $(".lineTimeEndEl");
 const billingNumEl = $("#billingNum");
 const newProjectNameEl = $("#newProjectName");
 const newProjectBtnEl = $(".newProjectBtn");
@@ -10,9 +11,10 @@ const endShiftButtonEl = $(".endShiftButtonEl");
 const projectLineItem = $(".histBtn");
 
 console.log(endShiftButtonEl);
+const userIDEl = $(".userIDEl");
 
-const lineTimeEndEl = $(".lineTimeEndEl");
 // console.log(lineTimeEndEl);
+console.log(endShiftButtonEl);
 
 //GLOBAL VARIABLES
 const time = moment();
@@ -27,10 +29,29 @@ startButtonEl.on("click", event => {
   lineTimeStartEl.text(timeFormatted);
 });
 
-//FUNCTION OF THE END BUTTON
+//FUNCTION OF THE END TASK BUTTON
 endButtonEl.on("click", event => {
   event.preventDefault();
+  //THIS POPULATES THE END TIME
   lineTimeEndEl.text(moment().format("YYYY-MM-DD HH:mm:ss"));
+
+  //THIS GETS OUR INSTANCE OBJECT TO POST
+  const instanceObject = {
+    projectId: projectLineItem.attr("id"),
+    userId: userIDEl.attr("id"),
+    timeIn: lineTimeStartEl.text(),
+    timeOut: lineTimeEndEl.text()
+  };
+  console.log(instanceObject);
+
+  //NOW CREATE A POST REQUEST
+  $.post("/api/newInstance", instanceObject).then(() => {
+    location.reload();
+  });
+  //CLEAR THE FIELDS
+  lineTimeEndEl.text("click -->");
+  // POPULATES THE START TIME OF THE NEW, NOW CURRENT TASK
+  lineTimeStartEl.text(moment().format("YYYY-MM-DD HH:mm:ss"));
 });
 
 //FUNCTION FOR NEW PROJECT ADD
