@@ -93,44 +93,36 @@
                   {{!-- ACTUAL MODAL END--}}
                   <!-- END Modal -->
 
-                  {{!-- PROJECT HISTORY DROPDOWN --}}
-                  {{!-- BUTTONS WITH DROPDOWNS START --}}
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">Project History</button>
-                      <div class="dropdown-menu">
+                    {{!-- PROJECT HISTORY DROPDOWN --}}
+                      {{!-- BUTTONS WITH DROPDOWNS START --}}
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <button class="projectLineItem histBtn btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Project History</button> 
+                        <div class="dropdown-menu">
+                            <ul class="projectDropDownListEl">
+                              {{#each projects}}
+                              <li class="dropdown-item" id={{id}}>
+                                {{projectName}}
+                              </li>
+                              {{/each}}
+                            </ul>
+                        </div>
 
-                        <ul class="projectDropDownListEl">
-                          {{#each projects}}
-                          <li class="dropdown-item" id={{id}}>
-                            {{projectName}}
-                          </li>
-                          {{/each}}
-                        </ul>
                       </div>
                     </div>
-                    <input type="text" class="form-control projectLineItem"
-                      aria-label="Text input with dropdown button">
+                      {{!-- BUTTONS WITH DROPDOWNS END --}}
                   </div>
                   {{!-- BUTTONS WITH DROPDOWNS END --}}
 
                 </div>
               </div>
-              <div class="col-auto">
-              </div>
-            </div>
-          </th>
-          <td class="lineTimeStartEl">Start Time</td>
-          <td class="lineTimeEndEl"> --- </td>
-          <td><button type="button" class="btn btn-danger endButtonEl">END TASK</button></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="container row">
-      <button type="button" class="mx-2 btn btn-danger endShiftButtonEl">END SHIFT</button>
-    </div>
-
-    </body>
-
-    </html>
+            </th>
+            <td class="lineTimeStartEl"> --- </td>
+            <td class="lineTimeEndEl"> --- </td>
+            <td><button type="button" class="btn btn-danger endButtonEl">END TASK</button></td>
+          </tr>
+        </tbody>
+      </table>
+  <div class="container row">
+    <button type="button" class="mx-2 btn btn-danger endShiftButtonEl">END SHIFT</button>
+  </div>
