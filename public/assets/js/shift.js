@@ -7,6 +7,7 @@ const newProjectNameEl = $("#newProjectName");
 const newProjectBtnEl = $(".newProjectBtn");
 const projectDropDownListEl = $(".projectDropDownListEl");
 const projectLineItem = $(".projectLineItem");
+const endButtonEl = $(".endButtonEl");
 // console.log(newProjectBtnEl);
 
 const lineTimeEndEl = $(".lineTimeEndEl");
