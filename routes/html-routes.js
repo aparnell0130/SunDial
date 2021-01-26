@@ -40,7 +40,7 @@ router.get("/shift", (req, res) => {
       });
       const instances = await db.Instance.findAll({
         where: {},
-        include: [db.Project, db.User]
+        include: [db.Project]
       }).then(instances => {
         const instancesObj = {
           instance: instances.map(data => {
@@ -49,7 +49,6 @@ router.get("/shift", (req, res) => {
               projectName: data.Project.projectName,
               ProjectId: data.ProjectId,
               UserId: data.UserId,
-              firstName: data.User.firstName,
               timeIn: data.timeIn,
               timeOut: data.timeOut
             };
@@ -59,7 +58,28 @@ router.get("/shift", (req, res) => {
         return instancesObj.instance;
         // res.render("shift", { instances: instancesObj.instance });
       });
-      res.render("shift", { projects: projects, instances: instances });
+      const user = await db.User.findAll({
+        where: {
+          id: userId
+        }
+      }).then(user => {
+        console.log(user);
+        const usersObj = {
+          names: user.map(data => {
+            return {
+              id: data.id,
+              firstName: data.firstName,
+              lastName: data.lastName
+            };
+          })
+        };
+        return usersObj.names;
+      });
+      res.render("shift", {
+        projects: projects,
+        instances: instances,
+        user: user
+      });
     } catch (err) {
       console.log(err);
     }

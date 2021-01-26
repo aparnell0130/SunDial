@@ -25,10 +25,12 @@
 <body>
   <div class="jumbotron jumbotron-fluid">
 
-    <div id="head" >
+    <div id="head">
       <h1>SUNDIAL SHIFTS</h1>
     </div>
-
+    {{#each user}}
+    <h1 id={{id}} class="userIDEL">{{firstName}} {{lastName}}</h1>
+    {{/each}}
     <div class="container row">
       <button type="button" class="mx-2 btn btn-success startButtonEl">START SHIFT</button>
     </div>
@@ -43,14 +45,14 @@
         </tr>
       </thead>
       <tbody id="instanceData">
-          {{#each instances}}
+        {{#each instances}}
         <tr>
           <td>{{projectName}}</td>
           <td data-timein="{{timeIn}}">{{timeIn}}</td>
           <td data-timeout="{{timeOut}}">{{timeOut}}</td>
           <td class="timeSpent"></td>
         </tr>
-          {{/each}}
+        {{/each}}
       </tbody>
 
       <table class="table">
@@ -113,24 +115,26 @@
                     <!-- END Modal -->
 
                     {{!-- PROJECT HISTORY DROPDOWN --}}
-                      {{!-- BUTTONS WITH DROPDOWNS START --}}
+                    {{!-- BUTTONS WITH DROPDOWNS START --}}
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
-                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Project History</button>
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false">Project History</button>
                         <div class="dropdown-menu">
-                          
-                            <ul class = "projectDropDownListEl">
-                              {{#each projects}}
-                              <li class="dropdown-item" id={{id}}>
-                                {{projectName}}
-                              </li>
-                              {{/each}}
-                            </ul>
+
+                          <ul class="projectDropDownListEl">
+                            {{#each projects}}
+                            <li class="dropdown-item" id={{id}}>
+                              {{projectName}}
+                            </li>
+                            {{/each}}
+                          </ul>
                         </div>
                       </div>
-                      <input type="text" class="form-control projectLineItem" aria-label="Text input with dropdown button">
+                      <input type="text" class="form-control projectLineItem"
+                        aria-label="Text input with dropdown button">
                     </div>
-                      {{!-- BUTTONS WITH DROPDOWNS END --}}
+                    {{!-- BUTTONS WITH DROPDOWNS END --}}
 
                   </div>
                 </div>
