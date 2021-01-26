@@ -1,9 +1,8 @@
 // DOM ELEMENTS:
 const userSubmitEl = $("#user-submit");
-const userListEl = $(".userListEl");
+const userListEl = $(".userInfo");
 
 userSubmitEl.on("click", event => {
-  // console.log($("#user-submit"));
   event.preventDefault();
   //front end team to match id for submit button
   const newUser = {
@@ -24,12 +23,11 @@ userSubmitEl.on("click", event => {
 });
 
 //Functionality to redirect to shift page when selecting a user
-userListEl.on("click", event => {
+userListEl.on("click", function(event) {
   event.preventDefault();
-  event.stopPropagation();
-  console.log(this);
-  const renderedUser = $(event.target).text();
-  console.log(renderedUser);
-
-  window.location.replace("/shift");
+  // event.stopPropagation();
+  // const renderedUser = $(event.target).text();
+  const userId = $(this).data("id");
+  console.log(userId);
+  window.location.replace("/shift?userId=" + userId);
 });
