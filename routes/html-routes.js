@@ -15,22 +15,51 @@ router.get("/", (req, res) => {
         };
       })
     };
+    console.log(usersObj);
     res.render("index", { users: usersObj.names });
   });
 });
-
 router.get("/shift", (req, res) => {
-  db.User.findAll({}).then(users => {
-    const usersObj = {
-      names: users.map(data => {
-        return {
-          firstName: data.firstName,
-          lastName: data.lastName
+  renderShift();
+  async function renderShift() {
+    try {
+      const projects = await db.Project.findAll({}).then(projects => {
+        const projectsObj = {
+          projects: projects.map(data => {
+            return {
+              id: data.id,
+              projectName: data.projectName,
+              projectNumber: data.projectNumber
+            };
+          })
         };
-      })
-    };
-    res.render("shift", { users: usersObj.names });
-  });
+        // console.log(projectsObj);
+        return projectsObj.projects;
+      });
+      const instances = await db.Instance.findAll({
+        where: {},
+        include: [db.Project]
+      }).then(instances => {
+        const instancesObj = {
+          instance: instances.map(data => {
+            return {
+              id: data.id,
+              projectName: data.Project.projectName,
+              ProjectId: data.ProjectId,
+              timeIn: data.timeIn,
+              timeOut: data.timeOut
+            };
+          })
+        };
+        console.log(instancesObj);
+        return instancesObj.instance;
+        // res.render("shift", { instances: instancesObj.instance });
+      });
+      res.render("shift", { projects: projects, instances: instances });
+    } catch (err) {
+      console.log(err);
+    }
+  }
 });
 
 module.exports = router;

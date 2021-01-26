@@ -8,44 +8,7 @@
 
     <div class="container row">
       <button type="button" class="mx-2 btn btn-success startButtonEl">START SHIFT</button>
-
-      <!-- START Modal -->
-      <div class="text-center">
-        <button type="button" class="btn btn-primary startButtonEl" data-toggle="modal" data-target="#exampleModal"
-          data-whatever="@getbootstrap">NEW PROJECT</button>
-      </div>
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Enter New Project Information</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="form-group">
-                  <label for="billingNum" class="col-form-label">Billing #</label>
-                  <input type="text" class="form-control" id="billingNum">
-                </div>
-                <div class="form-group">
-                  <label for="newProjectName" class="col-form-label">New Project Name:</label>
-                  <input type="text" class="form-control" id="newProjectName">
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button id="project-submit" type="button" class="btn btn-primary newProjectBtn">Submit</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- END Modal -->
     </div>
-
 
     <table class="table">
       <thead>
@@ -53,28 +16,115 @@
           <th scope="col">PROJECT NAME</th>
           <th scope="col">TIME START</th>
           <th scope="col">TIME END</th>
-          <th scope="col">TASK</th>
+          <th scope="col">TIME SPENT</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="instanceData">
+          {{#each instances}}
         <tr>
-          <th scope="row">
-            <div class="row g-3 align-items-center">
-              <div class="col-auto">
-                <label for="inputPassword6" class="col-form-label"></label>
-              </div>
-              <div class="col-auto">
-                <input id="project-form" class="form-control ">
-              </div>
-              <div class="col-auto">
-
-              </div>
-            </div>
-          </th>
-          <td class="lineTimeStartEl">Start Time</td>
-          <td class="lineTimeEndEl"> --- </td>
-          <td><button type="button" class="btn btn-danger endButtonEl">END TASK</button></td>
+          <td>{{projectName}}</td>
+          <td data-timein="{{timeIn}}">{{timeIn}}</td>
+          <td data-timeout="{{timeOut}}">{{timeOut}}</td>
+          <td class="timeSpent"></td>
         </tr>
+          {{/each}}
       </tbody>
-    </table>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">PROJECT NAME</th>
+            <th scope="col">TIME START</th>
+            <th scope="col">TIME END</th>
+            <th scope="col">TASK</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">
+              <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                  <label for="inputPassword6" class="col-form-label"></label>
+                </div>
+                <div class="col-auto">
+                  <div class="btn-group">
+                    <!-- START MODAL COMPONENT -->
+                    {{!-- MODAL BUTTON START--}}
+                    <div class="text-center">
+                      <button type="button" class="btn btn-primary startButtonEl" data-toggle="modal"
+                        data-target="#exampleModal" data-whatever="@getbootstrap">New</button>
+                    </div>
+                    {{!-- MODAL BUTTON END--}}
+                    {{!-- ACTUAL MODAL START--}}
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                      aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Enter New Project Information</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <form>
+                              <div class="form-group">
+                                <label for="billingNum" class="col-form-label">Billing #</label>
+                                <input type="text" class="form-control" id="billingNum">
+                              </div>
+                              <div class="form-group">
+                                <label for="newProjectName" class="col-form-label">New Project Name:</label>
+                                <input type="text" class="form-control" id="newProjectName">
+                              </div>
+                            </form>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button id="project-submit" type="button"
+                              class="btn btn-primary newProjectBtn">Submit</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {{!-- ACTUAL MODAL END--}}
+                    <!-- END Modal -->
+
+                    {{!-- PROJECT HISTORY DROPDOWN --}}
+                      {{!-- BUTTONS WITH DROPDOWNS START --}}
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Project History</button>
+                        <div class="dropdown-menu">
+                          
+                            <ul class = "projectDropDownListEl">
+                              {{#each projects}}
+                              <li class="dropdown-item" id={{id}}>
+                                {{projectName}}
+                              </li>
+                              {{/each}}
+                            </ul>
+                        </div>
+                      </div>
+                      <input type="text" class="form-control projectLineItem" aria-label="Text input with dropdown button">
+                    </div>
+                      {{!-- BUTTONS WITH DROPDOWNS END --}}
+
+                  </div>
+                </div>
+                <div class="col-auto">
+                </div>
+              </div>
+            </th>
+            <td class="lineTimeStartEl">Start Time</td>
+            <td class="lineTimeEndEl"> --- </td>
+            <td><button type="button" class="btn btn-danger endButtonEl">END TASK</button></td>
+          </tr>
+        </tbody>
+      </table>
+  <div class="container row">
+    <button type="button" class="mx-2 btn btn-danger endShiftButtonEl">END SHIFT</button>
   </div>
+
+</body>
+
+</html>
