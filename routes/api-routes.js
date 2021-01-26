@@ -17,6 +17,17 @@ router.get("/api/users", (req, res) => {
     res.json({ users: usersObj.names });
   });
 });
+
+router.get("/api/:id", (req, res) => {
+  db.User.findOne({
+    where: {
+      id: req.params.id
+    }
+  }).then(users => {
+    return res.json(users);
+  });
+});
+
 router.post("/api/newUser", (req, res) => {
   console.log(req.body);
   db.User.create({
