@@ -30,13 +30,14 @@
 
     <canvas id="myChart"></canvas>
 <script>
+  //data arrays:
   const xLabels=['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange']  
-  chartIt()
-
+  const yData=[12, 19, 3, 5, 2, 3]
+  //call my function
+chartIt()
+//define my function
 function chartIt(){
   var ctx = document.getElementById('myChart').getContext('2d');
-
-  const yData=[12, 19, 3, 5, 2, 3]
   var myChart = new Chart(ctx, {
       type: 'doughnut',
       data: {
