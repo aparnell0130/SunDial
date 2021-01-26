@@ -6,8 +6,9 @@ const billingNumEl = $("#billingNum");
 const newProjectNameEl = $("#newProjectName");
 const newProjectBtnEl = $(".newProjectBtn");
 const projectDropDownListEl = $(".projectDropDownListEl");
-const projectLineItem = $(".projectLineItem");
 const endShiftButtonEl = $(".endShiftButtonEl");
+const projectLineItem = $(".histBtn");
+
 console.log(endShiftButtonEl);
 
 const lineTimeEndEl = $(".lineTimeEndEl");
@@ -68,7 +69,7 @@ $(".timeSpent").each(function() {
 projectDropDownListEl.on("click", event => {
   event.preventDefault();
   const renderedProjectName = $(event.target).text();
+  projectLineItem.text(renderedProjectName);
   const renderedProjectID = $(event.target).attr("id");
-  projectLineItem.val(renderedProjectName.trim());
   projectLineItem.attr("id", renderedProjectID);
 });

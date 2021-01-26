@@ -93,10 +93,9 @@
                       {{!-- BUTTONS WITH DROPDOWNS START --}}
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
-                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Project History</button>
+                        <button class="projectLineItem histBtn btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Project History</button> 
                         <div class="dropdown-menu">
-                          
-                            <ul class = "projectDropDownListEl">
+                            <ul class="projectDropDownListEl">
                               {{#each projects}}
                               <li class="dropdown-item" id={{id}}>
                                 {{projectName}}
@@ -104,18 +103,17 @@
                               {{/each}}
                             </ul>
                         </div>
+
                       </div>
-                      <input type="text" class="form-control projectLineItem" aria-label="Text input with dropdown button">
                     </div>
                       {{!-- BUTTONS WITH DROPDOWNS END --}}
-
                   </div>
                 </div>
                 <div class="col-auto">
                 </div>
               </div>
             </th>
-            <td class="lineTimeStartEl">Start Time</td>
+            <td class="lineTimeStartEl"> --- </td>
             <td class="lineTimeEndEl"> --- </td>
             <td><button type="button" class="btn btn-danger endButtonEl">END TASK</button></td>
           </tr>
