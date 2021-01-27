@@ -149,5 +149,6 @@ function chartIt() {
       }
     }
   });
+  console.log(myChart);
 }
 //END CHART FUNCTION
