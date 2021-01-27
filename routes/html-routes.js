@@ -3,8 +3,10 @@ const db = require("../models");
 const { Op } = require("sequelize");
 const express = require("express");
 const date = new Date();
-const today = date.toISOString().split("T")[0];
-console.log(today);
+const today = new Date(date);
+today.setHours(date.getHours() - 8);
+const currentDay = today.toISOString().split("T")[0];
+console.log(today, date, currentDay);
 const router = express.Router();
 //I THINK THIS IS AN HTML ROUTE AND SHOULD BE MOVED TO THE HTML-ROUTES.JS FILE
 router.get("/", (req, res) => {
@@ -42,7 +44,7 @@ router.get("/shift", (req, res) => {
         where: {
           UserId: userId,
           timeIn: {
-            [Op.like]: today + "%"
+            [Op.like]: currentDay + "%"
           }
         },
         include: [db.Project]
