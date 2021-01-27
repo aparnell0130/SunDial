@@ -49,10 +49,14 @@ endButtonEl.on("click", event => {
     location.reload();
   });
   //CLEAR THE FIELDS
-  lineTimeEndEl.text("click -->");
-  // POPULATES THE START TIME OF THE NEW, NOW CURRENT TASK
-  lineTimeStartEl.text(moment().format("YYYY-MM-DD HH:mm:ss"));
-  console.log(lineTimeStartEl.text());
+  prePopulateNextTask();
+  //ASYNCHRONOUS PART OF THE FUNCTION, WE WANT THIS TO HAPPEN AFTER THE POST REQUEST IS MADE
+  async function prePopulateNextTask() {
+    lineTimeEndEl.text("click -->");
+    // POPULATES THE START TIME OF THE NEW, NOW CURRENT TASK
+    lineTimeStartEl.text(moment().format("YYYY-MM-DD HH:mm:ss"));
+    console.log(lineTimeStartEl.text());
+  }
 });
 
 //FUNCTION FOR NEW PROJECT ADD
