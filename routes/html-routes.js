@@ -28,6 +28,7 @@ router.get("/shift", (req, res) => {
   renderShift();
   async function renderShift() {
     try {
+      let lastTimeOut;
       const projects = await db.Project.findAll({}).then(projects => {
         const projectsObj = {
           projects: projects.map(data => {
@@ -61,6 +62,13 @@ router.get("/shift", (req, res) => {
             };
           })
         };
+        if (instancesObj.instance.length > 0) {
+          lastTimeOut =
+            instancesObj.instance[instancesObj.instance.length - 1].timeOut;
+          console.log(lastTimeOut);
+        } else {
+          lastTimeOut = "---";
+        }
         return instancesObj.instance;
       });
       const user = await db.User.findAll({
@@ -82,7 +90,8 @@ router.get("/shift", (req, res) => {
       res.render("shift", {
         projects: projects,
         instances: instances,
-        user: user
+        user: user,
+        lastTimeOut: lastTimeOut
       });
     } catch (err) {
       console.log(err);
