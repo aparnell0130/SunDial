@@ -10,11 +10,11 @@ const projectDropDownListEl = $(".projectDropDownListEl");
 const endShiftButtonEl = $(".endShiftButtonEl");
 const projectLineItem = $(".histBtn");
 
-console.log(endShiftButtonEl);
+// console.log(endShiftButtonEl);
 const userIDEl = $(".userIDEl");
 
 // console.log(lineTimeEndEl);
-console.log(endShiftButtonEl);
+// console.log(endShiftButtonEl);
 
 //GLOBAL VARIABLES
 const time = moment();
@@ -42,20 +42,22 @@ endButtonEl.on("click", event => {
     timeIn: lineTimeStartEl.text(),
     timeOut: lineTimeEndEl.text()
   };
-  console.log(instanceObject);
+  // console.log(instanceObject);
 
   //NOW CREATE A POST REQUEST
-  $.post("/api/newInstance", instanceObject).then(() => {
-    location.reload();
-  });
-  //CLEAR THE FIELDS
-  prePopulateNextTask();
-  //ASYNCHRONOUS PART OF THE FUNCTION, WE WANT THIS TO HAPPEN AFTER THE POST REQUEST IS MADE
-  async function prePopulateNextTask() {
-    lineTimeEndEl.text("click -->");
-    // POPULATES THE START TIME OF THE NEW, NOW CURRENT TASK
-    lineTimeStartEl.text(moment().format("YYYY-MM-DD HH:mm:ss"));
-    console.log(lineTimeStartEl.text());
+  postRequest();
+  async function postRequest() {
+    await $.post("/api/newInstance", instanceObject).then(() => {
+      location.reload();
+    });
+    //CLEAR THE FIELDS
+    prePopulateNextTask();
+    function prePopulateNextTask() {
+      lineTimeEndEl.text("click -->");
+      // POPULATES THE START TIME OF THE NEW, NOW CURRENT TASK
+      lineTimeStartEl.text(moment().format("YYYY-MM-DD HH:mm:ss"));
+      console.log(lineTimeStartEl.text());
+    }
   }
 });
 
@@ -69,7 +71,7 @@ newProjectBtnEl.on("click", event => {
     projectName: newProjectNameEl.val().trim()
     //   created_at: new Date()
   };
-  console.log(newProject);
+  // console.log(newProject);
 
   $.post("/api/newProject", newProject).then(() => {
     location.reload();
@@ -84,7 +86,7 @@ $(".timeSpent").each(function() {
   const timeOut = $(this)
     .prev()
     .data("timeout");
-  console.log(timeIn, timeOut);
+  // console.log(timeIn, timeOut);
   const time1 = moment(timeIn.split(" ").join("T"));
   const time2 = moment(timeOut.split(" ").join("T"));
   const timeSpent = time2.diff(time1, "hours", true);
@@ -100,10 +102,89 @@ projectDropDownListEl.on("click", event => {
   projectLineItem.attr("id", renderedProjectID);
 });
 
+//FUNCTION FOR THE END SHIFT BUTTON
+
+endShiftButtonEl.on("click", event => {
+  event.preventDefault();
+
+  //GET the data object from the db by calling a get request on the instances
+  const activeUser = userIDEl.attr("id");
+
+  $.get("/api/chartingInstances/" + activeUser).then(data => {
+    console.log("api/chartingInstances:", data);
+  });
+});
+
+//loop through all the projects and add them to the xLabels array
+//if the project already exists omit it.active
+
+// loop through the `TIME SPENT` properties
+// add each time spent to the corresponding project
+
+// //TEST DATA TO TRY TO CONSOLIDATE INFORMATION TO CHART
+// const instancesData = {
+//   instance: [
+//     {
+//       id: 1,
+//       projectName: "lost",
+//       ProjectId: 1,
+//       UserId: 1,
+//       timeIn: "2021-01-17 15:03:00",
+//       timeOut: "2021-01-17 15:30:00",
+//       deltaT: 1
+//     },
+//     {
+//       id: 2,
+//       projectName: "found",
+//       ProjectId: 2,
+//       UserId: 1,
+//       timeIn: "2021-01-17 15:30:00",
+//       timeOut: "2021-01-17 15:35:00",
+//       deltaT: 1
+//     },
+//     {
+//       id: 3,
+//       projectName: "uncertain",
+//       ProjectId: 3,
+//       UserId: 1,
+//       timeIn: "2021-01-17 15:35:00",
+//       timeOut: "2021-01-17 16:30:00",
+//       deltaT: 1
+//     },
+//     {
+//       id: 4,
+//       projectName: "found",
+//       ProjectId: 2,
+//       UserId: 1,
+//       timeIn: "2021-01-17 16:30:00",
+//       timeOut: "2021-01-17 16:55:00",
+//       deltaT: 1
+//     },
+//     {
+//       id: 5,
+//       projectName: "lost",
+//       ProjectId: 1,
+//       UserId: 1,
+//       timeIn: "2021-01-17 16:55:00",
+//       timeOut: "2021-01-17 17:30:00",
+//       deltaT: 1
+//     }
+//   ]
+// };
+
+// for (let i = 0; i < instancesData.instance.length; i++) {
+//   const element = instancesData.instance[i].projectName;
+//   console.log(element);
+// }
+// for (let i = 0; i < instancesData.instance.length; i++) {
+//   const element = instancesData.instance[i].deltaT;
+//   console.log(element);
+// }
+
 //START CHART FUNCTION
 //data arrays:
-const xLabels = ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"];
-const yData = [12, 19, 3, 5, 2, 3];
+const xLabels = ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"]; //THESE ARE PROJECTS
+const yData = [200, 19, 3, 5, 2, 3]; //THESE ARE HOURS
 //call my function
 chartIt();
 //define my function
@@ -124,14 +205,6 @@ function chartIt() {
             "rgba(75, 192, 192, 0.2)",
             "rgba(153, 102, 255, 0.2)",
             "rgba(255, 159, 64, 0.2)"
-          ],
-          borderColor: [
-            "rgba(255, 99, 132, 1)",
-            "rgba(54, 162, 235, 1)",
-            "rgba(255, 206, 86, 1)",
-            "rgba(75, 192, 192, 1)",
-            "rgba(153, 102, 255, 1)",
-            "rgba(255, 159, 64, 1)"
           ],
           borderWidth: 1
         }

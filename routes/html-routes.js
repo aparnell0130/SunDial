@@ -21,7 +21,7 @@ router.get("/", (req, res) => {
 });
 router.get("/shift", (req, res) => {
   const userId = req.query.userId;
-  console.log(userId);
+  console.log("/shift userID", userId);
   renderShift();
   async function renderShift() {
     try {
@@ -63,7 +63,7 @@ router.get("/shift", (req, res) => {
           id: userId
         }
       }).then(user => {
-        console.log(user);
+        // console.log(user);
         const usersObj = {
           names: user.map(data => {
             return {
