@@ -1,8 +1,14 @@
 // eslint-disable-next-line no-unused-vars
+const { Op } = require("sequelize");
 const db = require("../models");
 const express = require("express");
 
 const router = express.Router();
+
+const date = new Date();
+const today = new Date(date);
+today.setHours(date.getHours() - 8);
+const currentDay = today.toISOString().split("T")[0];
 
 router.get("/api/users", (req, res) => {
   db.User.findAll({}).then(users => {
@@ -96,7 +102,10 @@ router.get("/api/chartingInstances/:activeUser", (req, res) => {
   // console.log("/chartingInstances/:activeUser", req.params.byUser); // expect `3`
   db.Instance.findAll({
     where: {
-      UserId: req.params.activeUser
+      UserId: req.params.activeUser,
+      timeIn: {
+        [Op.like]: currentDay + "%"
+      }
     }
   }).then(instancesData => {
     res.json(instancesData);

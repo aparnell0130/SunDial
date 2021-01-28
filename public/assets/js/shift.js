@@ -120,6 +120,7 @@ endShiftButtonEl.on("click", event => {
       instanceElement.timeSpent = timeSpent;
     }
     console.log(data);
+    console.log(data[1]);
   };
   //GET the data object from the db by calling a get request on the instances
   const activeUser = userIDEl.attr("id");
@@ -128,60 +129,64 @@ endShiftButtonEl.on("click", event => {
     console.log("api/chartingInstances:", instancesData);
     //GET THE DELTAT
     deltaT(instancesData);
+    consolidateData(instancesData);
   });
-});
-
-//START CHART FUNCTION
-//data arrays:
-const xLabels = ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"]; //THESE ARE PROJECTS
-const yData = [200, 19, 3, 5, 2, 3]; //THESE ARE HOURS
-//call my function
-chartIt();
-//define my function
-function chartIt() {
-  const ctx = document.getElementById("myChart").getContext("2d");
-  const myChart = new Chart(ctx, {
-    type: "doughnut",
-    data: {
-      labels: xLabels,
-      datasets: [
+  //CONSOLIDATE MY PROJECT TIME
+  const newArray = [];
+  //   const newObject =[{
+  //     project: 1
+  //     timeSpent: += time spent from data Object
+  //   },
+  //   {
+  //     project: 2
+  //     timeSpent: += time spent from data Object
+  //   },
+  //   {
+  //     project: 3
+  //     timeSpent: += time spent from data Object
+  //   },
+  // ]
+  function consolidateData(data) {
+    for (let i = 0; i < data.length; i++) {
+      const element = data[i].ProjectId;
+      // console.log(element);
+      if (!(element in newArray)) {
+        newArray.push(element);
+        // console.log(element);
+      }
+    }
+    console.log("newArray: ", newArray);
+    const newObject = Object.fromEntries(
+      newArray.map(project => [
+        project,
         {
-          label: "Shift Time",
-          data: yData,
-          backgroundColor: [
-            "rgba(255, 99, 132, 0.2)",
-            "rgba(54, 162, 235, 0.2)",
-            "rgba(255, 206, 86, 0.2)",
-            "rgba(75, 192, 192, 0.2)",
-            "rgba(153, 102, 255, 0.2)",
-            "rgba(255, 159, 64, 0.2)"
-          ],
-          borderWidth: 1
+          deltaT: []
         }
-      ]
-    },
-    options: {
-      scales: {
-        yAxes: [
+      ])
+    );
+    console.log(newObject);
+  }
+  //Array of Projects=[A,B,C]
+  //Array of consolidatedTime=[1,2,3]
+
+  //START CHART FUNCTION
+  //data arrays:
+  const xLabels = ["Blue", "Yellow", "Green", "Purple", "Orange"]; //THESE ARE PROJECTS
+  const yData = [19, 3, 5, 2, 3]; //THESE ARE HOURS
+  //call my function
+  chartIt();
+  //define my function
+  function chartIt() {
+    const ctx = document.getElementById("myChart").getContext("2d");
+    const myChart = new Chart(ctx, {
+      type: "doughnut",
+      data: {
+        labels: xLabels,
+        datasets: [
           {
             label: "Shift Time",
             data: yData,
-            backgroundColor: [
-              "rgba(255, 99, 132, 0.2)",
-              "rgba(54, 162, 235, 0.2)",
-              "rgba(255, 206, 86, 0.2)",
-              "rgba(75, 192, 192, 0.2)",
-              "rgba(153, 102, 255, 0.2)",
-              "rgba(255, 159, 64, 0.2)"
-            ],
-            borderColor: [
-              "rgba(255, 99, 132, 1)",
-              "rgba(54, 162, 235, 1)",
-              "rgba(255, 206, 86, 1)",
-              "rgba(75, 192, 192, 1)",
-              "rgba(153, 102, 255, 1)",
-              "rgba(255, 159, 64, 1)"
-            ],
+            backgroundColor: [],
             borderWidth: 1
           }
         ]
@@ -190,15 +195,41 @@ function chartIt() {
         scales: {
           yAxes: [
             {
-              ticks: {
-                beginAtZero: true
-              }
+              label: "Shift Time",
+              data: yData,
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.2)",
+                "rgba(54, 162, 235, 0.2)",
+                "rgba(255, 206, 86, 0.2)",
+                "rgba(75, 192, 192, 0.2)",
+                "rgba(153, 102, 255, 0.2)",
+                "rgba(255, 159, 64, 0.2)"
+              ],
+              borderColor: [
+                "rgba(255, 99, 132, 1)",
+                "rgba(54, 162, 235, 1)",
+                "rgba(255, 206, 86, 1)",
+                "rgba(75, 192, 192, 1)",
+                "rgba(153, 102, 255, 1)",
+                "rgba(255, 159, 64, 1)"
+              ],
+              borderWidth: 1
             }
           ]
+        },
+        options: {
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true
+                }
+              }
+            ]
+          }
         }
       }
     });
     console.log(myChart);
   }
-}
-//END CHART FUNCTION
+});
