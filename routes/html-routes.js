@@ -1,14 +1,15 @@
-// eslint-disable-next-line no-unused-vars
+// require folders and npm packages
 const db = require("../models");
 const { Op } = require("sequelize");
 const express = require("express");
+/*=====================get current day=====================*/
 const date = new Date();
 const today = new Date(date);
 today.setHours(date.getHours() - 8);
 const currentDay = today.toISOString().split("T")[0];
-console.log(today, date, currentDay);
+/*=========================================================*/
 const router = express.Router();
-//I THINK THIS IS AN HTML ROUTE AND SHOULD BE MOVED TO THE HTML-ROUTES.JS FILE
+// render index page with users
 router.get("/", (req, res) => {
   db.User.findAll({}).then(users => {
     const usersObj = {
@@ -23,11 +24,13 @@ router.get("/", (req, res) => {
     res.render("index", { users: usersObj.names });
   });
 });
+// render shift page with current users projects and instances
 router.get("/shift", (req, res) => {
   const userId = req.query.userId;
   renderShift();
   async function renderShift() {
     try {
+      let lastTimeOut;
       const projects = await db.Project.findAll({}).then(projects => {
         const projectsObj = {
           projects: projects.map(data => {
@@ -61,6 +64,13 @@ router.get("/shift", (req, res) => {
             };
           })
         };
+        if (instancesObj.instance.length > 0) {
+          lastTimeOut =
+            instancesObj.instance[instancesObj.instance.length - 1].timeOut;
+          console.log(lastTimeOut);
+        } else {
+          lastTimeOut = "---";
+        }
         return instancesObj.instance;
       });
       const user = await db.User.findAll({
@@ -82,7 +92,8 @@ router.get("/shift", (req, res) => {
       res.render("shift", {
         projects: projects,
         instances: instances,
-        user: user
+        user: user,
+        lastTimeOut: lastTimeOut
       });
     } catch (err) {
       console.log(err);
