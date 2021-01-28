@@ -21,7 +21,7 @@ router.get("/", (req, res) => {
 });
 router.get("/shift", (req, res) => {
   const userId = req.query.userId;
-  console.log(userId);
+  console.log(req.user);
   renderShift();
   async function renderShift() {
     try {
@@ -48,7 +48,7 @@ router.get("/shift", (req, res) => {
               id: data.id,
               projectName: data.Project.projectName,
               ProjectId: data.ProjectId,
-              UserId: data.UserId,
+              UserId: userId,
               timeIn: data.timeIn,
               timeOut: data.timeOut
             };
