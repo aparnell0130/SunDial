@@ -55,7 +55,7 @@ router.get("/shift", (req, res) => {
               id: data.id,
               projectName: data.Project.projectName,
               ProjectId: data.ProjectId,
-              UserId: data.UserId,
+              UserId: userId,
               timeIn: data.timeIn,
               timeOut: data.timeOut
             };
