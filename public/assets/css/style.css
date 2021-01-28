@@ -8,3 +8,20 @@ li{
   height:400px !important;
   width:400px !important
 }
+
+.navBtn {
+  border: solid 1px white !important;
+  border-radius: 3px !important;
+}
+
+.navbar {
+  border-radius: 0px 0px 4px 4px;
+}
+
+.selUser {
+  border-radius: 5px !important;
+}
+
+.homeTit {
+  font-family: 'Yanone Kaffeesatz', sans-serif !important;
+}
