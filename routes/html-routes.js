@@ -1,7 +1,12 @@
 // eslint-disable-next-line no-unused-vars
 const db = require("../models");
+const { Op } = require("sequelize");
 const express = require("express");
-
+const date = new Date();
+const today = new Date(date);
+today.setHours(date.getHours() - 8);
+const currentDay = today.toISOString().split("T")[0];
+console.log(today, date, currentDay);
 const router = express.Router();
 //I THINK THIS IS AN HTML ROUTE AND SHOULD BE MOVED TO THE HTML-ROUTES.JS FILE
 router.get("/", (req, res) => {
@@ -15,13 +20,11 @@ router.get("/", (req, res) => {
         };
       })
     };
-    console.log(usersObj);
     res.render("index", { users: usersObj.names });
   });
 });
 router.get("/shift", (req, res) => {
   const userId = req.query.userId;
-  console.log(req.user);
   renderShift();
   async function renderShift() {
     try {
@@ -35,11 +38,15 @@ router.get("/shift", (req, res) => {
             };
           })
         };
-        // console.log(projectsObj);
         return projectsObj.projects;
       });
       const instances = await db.Instance.findAll({
-        where: {},
+        where: {
+          UserId: userId,
+          timeIn: {
+            [Op.like]: currentDay + "%"
+          }
+        },
         include: [db.Project]
       }).then(instances => {
         const instancesObj = {
@@ -54,16 +61,13 @@ router.get("/shift", (req, res) => {
             };
           })
         };
-        console.log("/shift:", instancesObj);
         return instancesObj.instance;
-        // res.render("shift", { instances: instancesObj.instance });
       });
       const user = await db.User.findAll({
         where: {
           id: userId
         }
       }).then(user => {
-        console.log(user);
         const usersObj = {
           names: user.map(data => {
             return {
