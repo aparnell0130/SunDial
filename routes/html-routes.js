@@ -1,14 +1,15 @@
-// eslint-disable-next-line no-unused-vars
+// require folders and npm packages
 const db = require("../models");
 const { Op } = require("sequelize");
 const express = require("express");
+/*=====================get current day=====================*/
 const date = new Date();
 const today = new Date(date);
 today.setHours(date.getHours() - 8);
 const currentDay = today.toISOString().split("T")[0];
-console.log(today, date, currentDay);
+/*=========================================================*/
 const router = express.Router();
-//I THINK THIS IS AN HTML ROUTE AND SHOULD BE MOVED TO THE HTML-ROUTES.JS FILE
+// render index page with users
 router.get("/", (req, res) => {
   db.User.findAll({}).then(users => {
     const usersObj = {
@@ -23,6 +24,7 @@ router.get("/", (req, res) => {
     res.render("index", { users: usersObj.names });
   });
 });
+// render shift page with current users projects and instances
 router.get("/shift", (req, res) => {
   const userId = req.query.userId;
   renderShift();
