@@ -34,7 +34,6 @@ endButtonEl.on("click", event => {
   event.preventDefault();
   //THIS POPULATES THE END TIME
   lineTimeEndEl.text(moment().format("YYYY-MM-DD HH:mm:ss"));
-
   //THIS GETS OUR INSTANCE OBJECT TO POST
   const instanceObject = {
     projectId: projectLineItem.attr("id"),
@@ -45,22 +44,24 @@ endButtonEl.on("click", event => {
   // console.log(instanceObject);
 
   //NOW CREATE A POST REQUEST
-  postRequest();
-  async function postRequest() {
-    await $.post("/api/newInstance", instanceObject).then(() => {
-      location.reload();
-    });
-    //CLEAR THE FIELDS
-    prePopulateNextTask();
-    function prePopulateNextTask() {
-      lineTimeEndEl.text("click -->");
-      // POPULATES THE START TIME OF THE NEW, NOW CURRENT TASK
-      lineTimeStartEl.text(moment().format("YYYY-MM-DD HH:mm:ss"));
-      console.log(lineTimeStartEl.text());
-    }
-  }
+  postRequest(instanceObject);
 });
 
+function postRequest(instanceObject) {
+  $.post("/api/newInstance", instanceObject, () => {
+    //CLEAR THE FIELDS
+
+    location.reload();
+  });
+}
+prePopulateNextTask();
+function prePopulateNextTask() {
+  lineTimeEndEl.text("click -->");
+  // POPULATES THE START TIME OF THE NEW, NOW CURRENT TASK
+  lineTimeStartEl.text(moment().format("YYYY-MM-DD HH:mm:ss"));
+
+  console.log(lineTimeStartEl.text());
+}
 //FUNCTION FOR NEW PROJECT ADD
 newProjectBtnEl.on("click", event => {
   // console.log($("#user-submit"));
@@ -163,14 +164,41 @@ function chartIt() {
       scales: {
         yAxes: [
           {
-            ticks: {
-              beginAtZero: true
-            }
+            label: "Shift Time",
+            data: yData,
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(255, 206, 86, 0.2)",
+              "rgba(75, 192, 192, 0.2)",
+              "rgba(153, 102, 255, 0.2)",
+              "rgba(255, 159, 64, 0.2)"
+            ],
+            borderColor: [
+              "rgba(255, 99, 132, 1)",
+              "rgba(54, 162, 235, 1)",
+              "rgba(255, 206, 86, 1)",
+              "rgba(75, 192, 192, 1)",
+              "rgba(153, 102, 255, 1)",
+              "rgba(255, 159, 64, 1)"
+            ],
+            borderWidth: 1
           }
         ]
+      },
+      options: {
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true
+              }
+            }
+          ]
+        }
       }
-    }
-  });
-  console.log(myChart);
+    });
+    console.log(myChart);
+  }
 }
 //END CHART FUNCTION
