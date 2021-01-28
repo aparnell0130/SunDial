@@ -9,6 +9,8 @@ const newProjectBtnEl = $(".newProjectBtn");
 const projectDropDownListEl = $(".projectDropDownListEl");
 const endShiftButtonEl = $(".endShiftButtonEl");
 const projectLineItem = $(".histBtn");
+const tiempo = $("#instanceData");
+console.log(tiempo);
 
 console.log(endShiftButtonEl);
 const userIDEl = $(".userIDEl");
@@ -53,8 +55,8 @@ function postRequest(instanceObject) {
 
     location.reload();
   });
+  prePopulateNextTask();
 }
-prePopulateNextTask();
 function prePopulateNextTask() {
   lineTimeEndEl.text("click -->");
   // POPULATES THE START TIME OF THE NEW, NOW CURRENT TASK
@@ -101,6 +103,7 @@ projectDropDownListEl.on("click", event => {
   projectLineItem.text(renderedProjectName);
   const renderedProjectID = $(event.target).attr("id");
   projectLineItem.attr("id", renderedProjectID);
+  // lineTimeStartEl.text("--");
 });
 
 //START CHART FUNCTION
