@@ -106,12 +106,27 @@ projectDropDownListEl.on("click", event => {
 
 endShiftButtonEl.on("click", event => {
   event.preventDefault();
+  const deltaT = data => {
+    console.log(data);
 
+    for (let i = 0; i < data.length; i++) {
+      const instanceElement = data[i];
+      const timeIn = instanceElement.timeIn;
+      const timeOut = instanceElement.timeOut;
+      const time1 = moment(timeIn.split(" ").join("T"));
+      const time2 = moment(timeOut.split(" ").join("T"));
+      const timeSpent = time2.diff(time1, "hours", true);
+      instanceElement.timeSpent = timeSpent;
+    }
+    console.log(data);
+  };
   //GET the data object from the db by calling a get request on the instances
   const activeUser = userIDEl.attr("id");
 
-  $.get("/api/chartingInstances/" + activeUser).then(data => {
-    console.log("api/chartingInstances:", data);
+  $.get("/api/chartingInstances/" + activeUser).then(instancesData => {
+    console.log("api/chartingInstances:", instancesData);
+    //GET THE DELTAT
+    deltaT(instancesData);
   });
 });
 
