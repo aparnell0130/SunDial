@@ -6,14 +6,18 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       unique: true,
       validate: {
-        len: [1, 140]
+        len: [1, 140],
+        notEmpty: true,
+        notContains: " "
       }
     },
     projectName: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: [1, 140]
+        len: [1, 140],
+        notEmpty: true,
+        notContains: " "
       }
     }
   });
