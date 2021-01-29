@@ -66,7 +66,7 @@ router.post("/api/newProject", (req, res) => {
 });
 
 router.get("/api/projects", (req, res) => {
-  db.User.findAll({}).then(projects => {
+  db.Project.findAll({}).then(projects => {
     const projectsObj = {
       projects: projects.map(data => {
         return {
@@ -76,6 +76,18 @@ router.get("/api/projects", (req, res) => {
       })
     };
     res.json({ projects: projectsObj.projects });
+  });
+});
+
+router.get("/api/project/:id", (req, res) => {
+  console.log(req.params.id);
+  db.Project.findOne({
+    where: {
+      id: req.params.id
+    }
+  }).then(data => {
+    // console.log(data);
+    return res.json(data);
   });
 });
 
