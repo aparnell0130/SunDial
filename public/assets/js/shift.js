@@ -34,7 +34,15 @@ endButtonEl.on("click", event => {
     timeIn: lineTimeStartEl.text(),
     timeOut: lineTimeEndEl.text()
   };
-
+  if (!instanceObject.projectId) {
+    lineTimeEndEl.text("---");
+    alert("Please Choose Valid Project");
+    return;
+  } else if (instanceObject.timeIn === "---") {
+    lineTimeEndEl.text("---");
+    alert("Please Start Shift");
+    return;
+  }
   //NOW CREATE A POST REQUEST
   postRequest(instanceObject);
 });
@@ -43,14 +51,6 @@ function postRequest(instanceObject) {
   $.post("/api/newInstance", instanceObject, () => {
     location.reload();
   });
-
-  prePopulateNextTask();
-}
-
-function prePopulateNextTask() {
-  lineTimeEndEl.text("click -->");
-  // POPULATES THE START TIME OF THE NEW, NOW CURRENT TASK
-  lineTimeStartEl.text(moment().format("YYYY-MM-DD HH:mm:ss"));
 }
 
 //FUNCTION FOR NEW PROJECT ADD
