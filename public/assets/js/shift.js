@@ -64,6 +64,11 @@ newProjectBtnEl.on("click", event => {
     projectNumber: billingNumEl.val().trim(),
     projectName: newProjectNameEl.val().trim()
   };
+  if (newProject.projectNumber === "" || newProject.projectName === "") {
+    alert("Please enter a valid Project name or a valid project Number");
+    return;
+  }
+  console.log(newProject.projectName);
 
   $.post("/api/newProject", newProject).then(() => {
     location.reload();
