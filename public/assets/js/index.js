@@ -22,8 +22,10 @@ userSubmitEl.on("click", event => {
     return;
   }
 
-  $.post("/api/newUser", newUser).then(() => {
-    location.reload();
+  $.post("/api/newUser", newUser).then(data => {
+    $.get("/api/" + data.id).then(userInfo => {
+      window.location.replace("/shift?userId=" + userInfo.id);
+    });
   });
 });
 
