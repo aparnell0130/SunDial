@@ -9,7 +9,6 @@ const newProjectBtnEl = $(".newProjectBtn");
 const projectDropDownListEl = $(".projectDropDownListEl");
 const endShiftButtonEl = $(".endShiftButtonEl");
 const projectLineItem = $(".histBtn");
-
 const userIDEl = $(".userIDEl");
 
 //GLOBAL VARIABLES
