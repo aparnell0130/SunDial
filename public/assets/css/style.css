@@ -17,8 +17,15 @@ li{
 .navbar {
   border-radius: 0px 0px 4px 4px;
 }
-
 .selUser {
+  border-radius: 4px;
+  border: none !important;
+}
+.userDrop {
+  border-radius: 4px;
+}
+
+.dropUser {
   border-radius: 5px !important;
 }
 
