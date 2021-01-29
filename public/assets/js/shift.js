@@ -67,9 +67,7 @@ newProjectBtnEl.on("click", event => {
   }
 
   $.post("/api/newProject", newProject).then(data => {
-    console.log(data.id);
     $.get("/api/project/" + data.id).then(result => {
-      console.log(result);
       projectLineItem.text(result.projectName);
       projectLineItem.attr("id", result.id);
     });
@@ -105,8 +103,6 @@ projectDropDownListEl.on("click", event => {
 endShiftButtonEl.on("click", event => {
   event.preventDefault();
   const deltaT = data => {
-    console.log(data);
-
     for (let i = 0; i < data.length; i++) {
       const instanceElement = data[i];
       const timeIn = instanceElement.timeIn;
@@ -116,7 +112,6 @@ endShiftButtonEl.on("click", event => {
       const timeSpent = time2.diff(time1, "hours", true);
       instanceElement.timeSpent = timeSpent;
     }
-    console.log(data);
   };
   //GET the data object from the db by calling a get request on the instances
   const activeUser = userIDEl.attr("id");
@@ -162,10 +157,11 @@ endShiftButtonEl.on("click", event => {
         timeSpent: timeSpent.toFixed(2)
       };
       dataArr.push(newObj);
-      x.push(mergedArray[i].projectName);
+      x.push(
+        `${mergedArray[i].projectName} ${parseFloat(timeSpent.toFixed(2))} hrs`
+      );
       y.push(parseFloat(timeSpent.toFixed(2)));
     }
-    console.log(dataArr);
     chartIt(x, y);
   }
 
@@ -176,8 +172,6 @@ endShiftButtonEl.on("click", event => {
 
   //define my function
   function chartIt(xLabels, yData) {
-    console.log(xLabels);
-    console.log(yData);
     const colors = [];
     for (let i = 0; i < xLabels.length; i++) {
       const o = Math.round,
@@ -202,11 +196,25 @@ endShiftButtonEl.on("click", event => {
         ]
       },
       options: {
+        tooltips: {
+          titleFontSize: 16,
+          bodyFontSize: 16,
+          callbacks: {
+            label: function(tooltipItems, data) {
+              return data.labels[tooltipItems.index];
+            }
+          }
+        },
+        legend: {
+          labels: {
+            fontSize: 16
+          }
+        },
         scales: {
           yAxes: [
             {
               ticks: {
-                beginAtZero: true
+                display: false
               }
             }
           ]
