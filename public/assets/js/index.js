@@ -14,8 +14,13 @@ userSubmitEl.on("click", event => {
       .trim()
     //   created_at: new Date()
   };
-
-  console.log(newUser);
+  if (newUser.firstName.length === 0) {
+    alert("Please Enter First Name");
+    return;
+  } else if (newUser.lastName.length === 0) {
+    alert("Please Enter Last Name");
+    return;
+  }
 
   $.post("/api/newUser", newUser).then(() => {
     location.reload();
