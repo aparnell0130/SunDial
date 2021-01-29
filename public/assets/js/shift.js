@@ -144,8 +144,8 @@ endShiftButtonEl.on("click", event => {
 
     // Create new array with timeSpent array summed
     const dataArr = [];
-    const x = []
-    const y = []
+    const x = [];
+    const y = [];
     for (let i = 0; i < mergedArray.length; i++) {
       const sum = (accumulator, currentValue) => accumulator + currentValue;
       const timeSpent = mergedArray[i].timeSpent.reduce(sum);
@@ -159,7 +159,7 @@ endShiftButtonEl.on("click", event => {
       y.push(parseFloat(timeSpent.toFixed(2)));
     }
     console.log(dataArr);
-    chartIt(x,y);
+    chartIt(x, y);
   }
 
   console.log(xLabels);
@@ -168,9 +168,9 @@ endShiftButtonEl.on("click", event => {
   //data arrays:
 
   //call my function
-  
+
   //define my function
-  function chartIt(xLabels,yData){
+  function chartIt(xLabels, yData) {
     console.log(xLabels);
     console.log(yData);
     const ctx = document.getElementById("myChart").getContext("2d");
