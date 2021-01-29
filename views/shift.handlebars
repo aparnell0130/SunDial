@@ -25,7 +25,7 @@
     </thead>
     <tbody id="instanceData">
       {{#each instances}}
-      <tr>
+      <tr id="{{id}}">
         <td>{{projectName}}</td>
         <td data-timein="{{timeIn}}">{{timeIn}}</td>
         <td data-timeout="{{timeOut}}">{{timeOut}}</td>
@@ -113,5 +113,7 @@
     <button type="button" class="mx-2 btn btn-danger endShiftButtonEl">END SHIFT</button>
   </div>
   {{!-- START CHART --}}
-  <canvas id="myChart"></canvas>
+  <div>
+  <canvas id="myChart" class="w-75 h-75 mx-auto mt-5"></canvas>
+  </div>
 </div>
