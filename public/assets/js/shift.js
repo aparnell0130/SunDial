@@ -15,8 +15,6 @@ const userIDEl = $(".userIDEl");
 //GLOBAL VARIABLES
 const time = moment();
 const timeFormatted = time.format("YYYY-MM-DD HH:mm:ss");
-// const xLabels = []; //THESE ARE PROJECTS
-// const yData = []; //THESE ARE HOURS
 
 //FUNCTION OF THE START BUTTON
 startButtonEl.on("click", event => {
