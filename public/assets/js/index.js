@@ -23,7 +23,7 @@ userSubmitEl.on("click", event => {
   }
 
   $.post("/api/newUser", newUser).then(data => {
-    $.get("/api/" + data.id).then(userInfo => {
+    $.get("/api/user/" + data.id).then(userInfo => {
       window.location.replace("/shift?userId=" + userInfo.id);
     });
   });

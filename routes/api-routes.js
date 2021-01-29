@@ -25,7 +25,7 @@ router.get("/api/users", (req, res) => {
   });
 });
 
-router.get("/api/:id", (req, res) => {
+router.get("/api/user/:id", (req, res) => {
   db.User.findOne({
     where: {
       id: req.params.id
