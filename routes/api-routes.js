@@ -4,11 +4,12 @@ const db = require("../models");
 const express = require("express");
 
 const router = express.Router();
-
+/*=====================Get Current Day=====================*/
 const date = new Date();
 const today = new Date(date);
 today.setHours(date.getHours() - 8);
 const currentDay = today.toISOString().split("T")[0];
+/*=====================Get Current Day=====================*/
 
 router.get("/api/users", (req, res) => {
   db.User.findAll({}).then(users => {
@@ -35,7 +36,6 @@ router.get("/api/:id", (req, res) => {
 });
 
 router.post("/api/newUser", (req, res) => {
-  console.log("/api/newUser", req.body);
   db.User.create({
     firstName: req.body.firstName,
     lastName: req.body.lastName
@@ -49,8 +49,8 @@ router.post("/api/newUser", (req, res) => {
       }
     });
 });
+
 router.post("/api/newProject", (req, res) => {
-  console.log("/api/newProject", req.body);
   db.Project.create({
     projectNumber: req.body.projectNumber,
     projectName: req.body.projectName
@@ -64,6 +64,7 @@ router.post("/api/newProject", (req, res) => {
       }
     });
 });
+
 router.get("/api/projects", (req, res) => {
   db.User.findAll({}).then(projects => {
     const projectsObj = {
@@ -77,11 +78,11 @@ router.get("/api/projects", (req, res) => {
     res.json({ projects: projectsObj.projects });
   });
 });
+
 //INSTANCE POST REQUEST
 router.post("/api/newInstance", (req, res) => {
-  console.log("/api/newInstance", req.body);
   db.Instance.create({
-    ProjectId: req.body.projectId, //keys must match mysql column tags
+    ProjectId: req.body.projectId,
     UserId: req.body.userId,
     timeIn: req.body.timeIn,
     timeOut: req.body.timeOut
@@ -99,17 +100,28 @@ router.post("/api/newInstance", (req, res) => {
 
 // //GET INSTANCES FOR END SHIFT BUTTON BY USER (WE WILL NEED TO FOCUS THIS TO FILTER ALSO BY DAY)
 router.get("/api/chartingInstances/:activeUser", (req, res) => {
-  // console.log("/chartingInstances/:activeUser", req.params.byUser); // expect `3`
   db.Instance.findAll({
     where: {
       UserId: req.params.activeUser,
       timeIn: {
         [Op.like]: currentDay + "%"
       }
-    }
+    },
+    include: [db.Project]
   }).then(instancesData => {
-    res.json(instancesData);
-    console.log(instancesData);
+    const instancesObj = {
+      instance: instancesData.map(data => {
+        return {
+          id: data.id,
+          projectName: data.Project.projectName,
+          ProjectId: data.ProjectId,
+          UserId: data.UserId,
+          timeIn: data.timeIn,
+          timeOut: data.timeOut
+        };
+      })
+    };
+    return res.json(instancesObj.instance);
   });
 });
 module.exports = router;

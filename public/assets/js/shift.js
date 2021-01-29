@@ -9,19 +9,11 @@ const newProjectBtnEl = $(".newProjectBtn");
 const projectDropDownListEl = $(".projectDropDownListEl");
 const endShiftButtonEl = $(".endShiftButtonEl");
 const projectLineItem = $(".histBtn");
-const tiempo = $("#instanceData");
-console.log(tiempo);
 
-// console.log(endShiftButtonEl);
 const userIDEl = $(".userIDEl");
-
-// console.log(lineTimeEndEl);
-// console.log(endShiftButtonEl);
 
 //GLOBAL VARIABLES
 const time = moment();
-
-// const dateFormatted = time.format("YYYY-MM-DD");
 const timeFormatted = time.format("YYYY-MM-DD HH:mm:ss");
 
 //FUNCTION OF THE START BUTTON
@@ -43,7 +35,6 @@ endButtonEl.on("click", event => {
     timeIn: lineTimeStartEl.text(),
     timeOut: lineTimeEndEl.text()
   };
-  // console.log(instanceObject);
 
   //NOW CREATE A POST REQUEST
   postRequest(instanceObject);
@@ -51,30 +42,26 @@ endButtonEl.on("click", event => {
 
 function postRequest(instanceObject) {
   $.post("/api/newInstance", instanceObject, () => {
-    //CLEAR THE FIELDS
-
     location.reload();
   });
+
   prePopulateNextTask();
 }
+
 function prePopulateNextTask() {
   lineTimeEndEl.text("click -->");
   // POPULATES THE START TIME OF THE NEW, NOW CURRENT TASK
   lineTimeStartEl.text(moment().format("YYYY-MM-DD HH:mm:ss"));
-
-  console.log(lineTimeStartEl.text());
 }
+
 //FUNCTION FOR NEW PROJECT ADD
 newProjectBtnEl.on("click", event => {
-  // console.log($("#user-submit"));
   event.preventDefault();
   //front end team to match id for submit button
   const newProject = {
     projectNumber: billingNumEl.val().trim(),
     projectName: newProjectNameEl.val().trim()
-    //   created_at: new Date()
   };
-  // console.log(newProject);
 
   $.post("/api/newProject", newProject).then(() => {
     location.reload();
@@ -89,7 +76,6 @@ $(".timeSpent").each(function() {
   const timeOut = $(this)
     .prev()
     .data("timeout");
-  // console.log(timeIn, timeOut);
   const time1 = moment(timeIn.split(" ").join("T"));
   const time2 = moment(timeOut.split(" ").join("T"));
   const timeSpent = time2.diff(time1, "hours", true);
@@ -103,7 +89,6 @@ projectDropDownListEl.on("click", event => {
   projectLineItem.text(renderedProjectName);
   const renderedProjectID = $(event.target).attr("id");
   projectLineItem.attr("id", renderedProjectID);
-  // lineTimeStartEl.text("--");
 });
 
 //FUNCTION FOR THE END SHIFT BUTTON
@@ -123,51 +108,57 @@ endShiftButtonEl.on("click", event => {
       instanceElement.timeSpent = timeSpent;
     }
     console.log(data);
-    console.log(data[1]);
   };
   //GET the data object from the db by calling a get request on the instances
   const activeUser = userIDEl.attr("id");
 
   $.get("/api/chartingInstances/" + activeUser).then(instancesData => {
-    console.log("api/chartingInstances:", instancesData);
     //GET THE DELTAT
     deltaT(instancesData);
     consolidateData(instancesData);
   });
+
   //CONSOLIDATE MY PROJECT TIME
-  const newArray = [];
-  //   const newObject =[{
-  //     project: 1
-  //     timeSpent: += time spent from data Object
-  //   },
-  //   {
-  //     project: 2
-  //     timeSpent: += time spent from data Object
-  //   },
-  //   {
-  //     project: 3
-  //     timeSpent: += time spent from data Object
-  //   },
-  // ]
-  function consolidateData(data) {
-    for (let i = 0; i < data.length; i++) {
-      const element = data[i].ProjectId;
-      // console.log(element);
-      if (!(element in newArray)) {
-        newArray.push(element);
-        // console.log(element);
-      }
+  function consolidateData(instancesData) {
+    // Create new array of objects pull out just the projectId, projectName and timeSpent
+    const newArr = [];
+    for (let i = 0; i < instancesData.length; i++) {
+      const element = {
+        ProjectId: instancesData[i].ProjectId,
+        projectName: instancesData[i].projectName,
+        timeSpent: [instancesData[i].timeSpent]
+      };
+      newArr.push(element);
     }
-    console.log("newArray: ", newArray);
-    const newObject = Object.fromEntries(
-      newArray.map(project => [
-        project,
-        {
-          deltaT: []
-        }
-      ])
-    );
-    console.log(newObject);
+
+    // for each id push multiple timeSpent into one array for timeSpent object
+    const arrayHashmap = newArr.reduce((obj, item) => {
+      obj[item.ProjectId]
+        ? obj[item.ProjectId].timeSpent.push(...item.timeSpent)
+        : (obj[item.ProjectId] = { ...item });
+      return obj;
+    }, {});
+    const mergedArray = Object.values(arrayHashmap);
+
+    // Create new array with timeSpent array summed
+    const dataArr = [];
+    const x = [];
+    const y = [];
+    for (let i = 0; i < mergedArray.length; i++) {
+      const sum = (accumulator, currentValue) => accumulator + currentValue;
+      const timeSpent = mergedArray[i].timeSpent.reduce(sum);
+      const newObj = {
+        ProjectId: mergedArray[i].ProjectId,
+        projectName: mergedArray[i].projectName,
+        timeSpent: timeSpent.toFixed(2)
+      };
+      dataArr.push(newObj);
+      x.push(mergedArray[i].projectName);
+      y.push(timeSpent.toFixed(2));
+    }
+    console.log(dataArr);
+    console.log(x);
+    console.log(y);
   }
   //Array of Projects=[A,B,C]
   //Array of consolidatedTime=[1,2,3]
