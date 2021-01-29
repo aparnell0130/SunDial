@@ -68,10 +68,15 @@ newProjectBtnEl.on("click", event => {
     alert("Please enter a valid Project name or a valid project Number");
     return;
   }
-  console.log(newProject.projectName);
 
-  $.post("/api/newProject", newProject).then(() => {
-    location.reload();
+  $.post("/api/newProject", newProject).then(data => {
+    console.log(data.id);
+    $.get("/api/project/" + data.id).then(result => {
+      console.log(result);
+      projectLineItem.text(result.projectName);
+      projectLineItem.attr("id", result.id);
+    });
+    // location.reload();
   });
 });
 
@@ -167,8 +172,6 @@ endShiftButtonEl.on("click", event => {
     chartIt(x, y);
   }
 
-  console.log(xLabels);
-  console.log(yData);
   //START CHART FUNCTION
   //data arrays:
 
