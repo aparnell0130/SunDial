@@ -15,6 +15,8 @@ const userIDEl = $(".userIDEl");
 //GLOBAL VARIABLES
 const time = moment();
 const timeFormatted = time.format("YYYY-MM-DD HH:mm:ss");
+// const xLabels = []; //THESE ARE PROJECTS
+// const yData = []; //THESE ARE HOURS
 
 //FUNCTION OF THE START BUTTON
 startButtonEl.on("click", event => {
@@ -154,23 +156,23 @@ endShiftButtonEl.on("click", event => {
       };
       dataArr.push(newObj);
       x.push(mergedArray[i].projectName);
-      y.push(timeSpent.toFixed(2));
+      y.push(parseFloat(timeSpent.toFixed(2)));
     }
     console.log(dataArr);
-    console.log(x);
-    console.log(y);
+    chartIt(x, y);
   }
-  //Array of Projects=[A,B,C]
-  //Array of consolidatedTime=[1,2,3]
 
+  console.log(xLabels);
+  console.log(yData);
   //START CHART FUNCTION
   //data arrays:
-  const xLabels = ["Blue", "Yellow", "Green", "Purple", "Orange"]; //THESE ARE PROJECTS
-  const yData = [19, 3, 5, 2, 3]; //THESE ARE HOURS
+
   //call my function
-  chartIt();
+
   //define my function
-  function chartIt() {
+  function chartIt(xLabels, yData) {
+    console.log(xLabels);
+    console.log(yData);
     const ctx = document.getElementById("myChart").getContext("2d");
     const myChart = new Chart(ctx, {
       type: "doughnut",
@@ -192,20 +194,20 @@ endShiftButtonEl.on("click", event => {
               label: "Shift Time",
               data: yData,
               backgroundColor: [
-                "rgba(255, 99, 132, 0.2)",
-                "rgba(54, 162, 235, 0.2)",
-                "rgba(255, 206, 86, 0.2)",
-                "rgba(75, 192, 192, 0.2)",
-                "rgba(153, 102, 255, 0.2)",
-                "rgba(255, 159, 64, 0.2)"
+                // "rgba(255, 99, 132, 0.2)",
+                // "rgba(54, 162, 235, 0.2)",
+                // "rgba(255, 206, 86, 0.2)",
+                // "rgba(75, 192, 192, 0.2)",
+                // "rgba(153, 102, 255, 0.2)",
+                // "rgba(255, 159, 64, 0.2)"
               ],
               borderColor: [
-                "rgba(255, 99, 132, 1)",
-                "rgba(54, 162, 235, 1)",
-                "rgba(255, 206, 86, 1)",
-                "rgba(75, 192, 192, 1)",
-                "rgba(153, 102, 255, 1)",
-                "rgba(255, 159, 64, 1)"
+                // "rgba(255, 99, 132, 1)",
+                // "rgba(54, 162, 235, 1)",
+                // "rgba(255, 206, 86, 1)",
+                // "rgba(75, 192, 192, 1)",
+                // "rgba(153, 102, 255, 1)",
+                // "rgba(255, 159, 64, 1)"
               ],
               borderWidth: 1
             }
