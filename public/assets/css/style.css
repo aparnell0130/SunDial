@@ -4,10 +4,6 @@ ul{
 li{
   cursor: pointer;
 }
-#myChart{
-  height:400px !important;
-  width:400px !important
-}
 
 .navBtn {
   border: solid 1px white !important;

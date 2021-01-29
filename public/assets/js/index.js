@@ -14,11 +14,18 @@ userSubmitEl.on("click", event => {
       .trim()
     //   created_at: new Date()
   };
+  if (newUser.firstName.length === 0) {
+    alert("Please Enter First Name");
+    return;
+  } else if (newUser.lastName.length === 0) {
+    alert("Please Enter Last Name");
+    return;
+  }
 
-  console.log(newUser);
-
-  $.post("/api/newUser", newUser).then(() => {
-    location.reload();
+  $.post("/api/newUser", newUser).then(data => {
+    $.get("/api/user/" + data.id).then(userInfo => {
+      window.location.replace("/shift?userId=" + userInfo.id);
+    });
   });
 });
 

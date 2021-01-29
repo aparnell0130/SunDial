@@ -9,19 +9,10 @@ const newProjectBtnEl = $(".newProjectBtn");
 const projectDropDownListEl = $(".projectDropDownListEl");
 const endShiftButtonEl = $(".endShiftButtonEl");
 const projectLineItem = $(".histBtn");
-const tiempo = $("#instanceData");
-console.log(tiempo);
-
-// console.log(endShiftButtonEl);
 const userIDEl = $(".userIDEl");
-
-// console.log(lineTimeEndEl);
-// console.log(endShiftButtonEl);
 
 //GLOBAL VARIABLES
 const time = moment();
-
-// const dateFormatted = time.format("YYYY-MM-DD");
 const timeFormatted = time.format("YYYY-MM-DD HH:mm:ss");
 
 //FUNCTION OF THE START BUTTON
@@ -47,7 +38,6 @@ endButtonEl.on("click", event => {
     timeIn: lineTimeStartEl.text(),
     timeOut: lineTimeEndEl.text()
   };
-  // console.log(instanceObject);
 
   //NOW CREATE A POST REQUEST
   postRequest(instanceObject);
@@ -55,33 +45,37 @@ endButtonEl.on("click", event => {
 
 function postRequest(instanceObject) {
   $.post("/api/newInstance", instanceObject, () => {
-    //CLEAR THE FIELDS
-
     location.reload();
   });
+
   prePopulateNextTask();
 }
+
 function prePopulateNextTask() {
   lineTimeEndEl.text("click -->");
   // POPULATES THE START TIME OF THE NEW, NOW CURRENT TASK
   lineTimeStartEl.text(moment().format("YYYY-MM-DD HH:mm:ss"));
-
-  console.log(lineTimeStartEl.text());
 }
+
 //FUNCTION FOR NEW PROJECT ADD
 newProjectBtnEl.on("click", event => {
-  // console.log($("#user-submit"));
   event.preventDefault();
   //front end team to match id for submit button
   const newProject = {
     projectNumber: billingNumEl.val().trim(),
     projectName: newProjectNameEl.val().trim()
-    //   created_at: new Date()
   };
-  // console.log(newProject);
+  if (newProject.projectNumber === "" || newProject.projectName === "") {
+    alert("Please enter a valid Project name or a valid project Number");
+    return;
+  }
 
-  $.post("/api/newProject", newProject).then(() => {
-    location.reload();
+  $.post("/api/newProject", newProject).then(data => {
+    $.get("/api/project/" + data.id).then(result => {
+      projectLineItem.text(result.projectName);
+      projectLineItem.attr("id", result.id);
+    });
+    // location.reload();
   });
 });
 
@@ -93,7 +87,6 @@ $(".timeSpent").each(function() {
   const timeOut = $(this)
     .prev()
     .data("timeout");
-  // console.log(timeIn, timeOut);
   const time1 = moment(timeIn.split(" ").join("T"));
   const time2 = moment(timeOut.split(" ").join("T"));
   const timeSpent = time2.diff(time1, "hours", true);
@@ -107,7 +100,6 @@ projectDropDownListEl.on("click", event => {
   projectLineItem.text(renderedProjectName);
   const renderedProjectID = $(event.target).attr("id");
   projectLineItem.attr("id", renderedProjectID);
-  // lineTimeStartEl.text("--");
 });
 
 //FUNCTION FOR THE END SHIFT BUTTON
@@ -115,8 +107,6 @@ projectDropDownListEl.on("click", event => {
 endShiftButtonEl.on("click", event => {
   event.preventDefault();
   const deltaT = data => {
-    console.log(data);
-
     for (let i = 0; i < data.length; i++) {
       const instanceElement = data[i];
       const timeIn = instanceElement.timeIn;
@@ -126,64 +116,75 @@ endShiftButtonEl.on("click", event => {
       const timeSpent = time2.diff(time1, "hours", true);
       instanceElement.timeSpent = timeSpent;
     }
-    console.log(data);
-    console.log(data[1]);
   };
   //GET the data object from the db by calling a get request on the instances
   const activeUser = userIDEl.attr("id");
 
   $.get("/api/chartingInstances/" + activeUser).then(instancesData => {
-    console.log("api/chartingInstances:", instancesData);
     //GET THE DELTAT
     deltaT(instancesData);
     consolidateData(instancesData);
   });
+
   //CONSOLIDATE MY PROJECT TIME
-  const newArray = [];
-  //   const newObject =[{
-  //     project: 1
-  //     timeSpent: += time spent from data Object
-  //   },
-  //   {
-  //     project: 2
-  //     timeSpent: += time spent from data Object
-  //   },
-  //   {
-  //     project: 3
-  //     timeSpent: += time spent from data Object
-  //   },
-  // ]
-  function consolidateData(data) {
-    for (let i = 0; i < data.length; i++) {
-      const element = data[i].ProjectId;
-      // console.log(element);
-      if (!(element in newArray)) {
-        newArray.push(element);
-        // console.log(element);
-      }
+  function consolidateData(instancesData) {
+    // Create new array of objects pull out just the projectId, projectName and timeSpent
+    const newArr = [];
+    for (let i = 0; i < instancesData.length; i++) {
+      const element = {
+        ProjectId: instancesData[i].ProjectId,
+        projectName: instancesData[i].projectName,
+        timeSpent: [instancesData[i].timeSpent]
+      };
+      newArr.push(element);
     }
-    console.log("newArray: ", newArray);
-    const newObject = Object.fromEntries(
-      newArray.map(project => [
-        project,
-        {
-          deltaT: []
-        }
-      ])
-    );
-    console.log(newObject);
+
+    // for each id push multiple timeSpent into one array for timeSpent object
+    const arrayHashmap = newArr.reduce((obj, item) => {
+      obj[item.ProjectId]
+        ? obj[item.ProjectId].timeSpent.push(...item.timeSpent)
+        : (obj[item.ProjectId] = { ...item });
+      return obj;
+    }, {});
+    const mergedArray = Object.values(arrayHashmap);
+
+    // Create new array with timeSpent array summed
+    const dataArr = [];
+    const x = [];
+    const y = [];
+    for (let i = 0; i < mergedArray.length; i++) {
+      const sum = (accumulator, currentValue) => accumulator + currentValue;
+      const timeSpent = mergedArray[i].timeSpent.reduce(sum);
+      const newObj = {
+        ProjectId: mergedArray[i].ProjectId,
+        projectName: mergedArray[i].projectName,
+        timeSpent: timeSpent.toFixed(2)
+      };
+      dataArr.push(newObj);
+      x.push(
+        `${mergedArray[i].projectName} ${parseFloat(timeSpent.toFixed(2))} hrs`
+      );
+      y.push(parseFloat(timeSpent.toFixed(2)));
+    }
+    chartIt(x, y);
   }
-  //Array of Projects=[A,B,C]
-  //Array of consolidatedTime=[1,2,3]
 
   //START CHART FUNCTION
   //data arrays:
-  const xLabels = ["Blue", "Yellow", "Green", "Purple", "Orange"]; //THESE ARE PROJECTS
-  const yData = [19, 3, 5, 2, 3]; //THESE ARE HOURS
+
   //call my function
-  chartIt();
+
   //define my function
-  function chartIt() {
+  function chartIt(xLabels, yData) {
+    const colors = [];
+    for (let i = 0; i < xLabels.length; i++) {
+      const o = Math.round,
+        r = Math.random,
+        s = 255;
+      const color =
+        "rgb(" + o(r() * s) + "," + o(r() * s) + "," + o(r() * s) + ")";
+      colors.push(color);
+    }
     const ctx = document.getElementById("myChart").getContext("2d");
     const myChart = new Chart(ctx, {
       type: "doughnut",
@@ -193,47 +194,34 @@ endShiftButtonEl.on("click", event => {
           {
             label: "Shift Time",
             data: yData,
-            backgroundColor: [],
+            backgroundColor: colors,
             borderWidth: 1
           }
         ]
       },
       options: {
+        tooltips: {
+          titleFontSize: 16,
+          bodyFontSize: 16,
+          callbacks: {
+            label: function(tooltipItems, data) {
+              return data.labels[tooltipItems.index];
+            }
+          }
+        },
+        legend: {
+          labels: {
+            fontSize: 16
+          }
+        },
         scales: {
           yAxes: [
             {
-              label: "Shift Time",
-              data: yData,
-              backgroundColor: [
-                "rgba(255, 99, 132, 0.2)",
-                "rgba(54, 162, 235, 0.2)",
-                "rgba(255, 206, 86, 0.2)",
-                "rgba(75, 192, 192, 0.2)",
-                "rgba(153, 102, 255, 0.2)",
-                "rgba(255, 159, 64, 0.2)"
-              ],
-              borderColor: [
-                "rgba(255, 99, 132, 1)",
-                "rgba(54, 162, 235, 1)",
-                "rgba(255, 206, 86, 1)",
-                "rgba(75, 192, 192, 1)",
-                "rgba(153, 102, 255, 1)",
-                "rgba(255, 159, 64, 1)"
-              ],
-              borderWidth: 1
+              ticks: {
+                display: false
+              }
             }
           ]
-        },
-        options: {
-          scales: {
-            yAxes: [
-              {
-                ticks: {
-                  beginAtZero: true
-                }
-              }
-            ]
-          }
         }
       }
     });

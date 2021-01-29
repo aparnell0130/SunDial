@@ -2,13 +2,15 @@
 const db = require("../models");
 const { Op } = require("sequelize");
 const express = require("express");
-/*=====================get current day=====================*/
+/*=====================Get Current Day=====================*/
 const date = new Date();
 const today = new Date(date);
 today.setHours(date.getHours() - 8);
 const currentDay = today.toISOString().split("T")[0];
-/*=========================================================*/
+/*=====================Get Current Day=====================*/
+
 const router = express.Router();
+
 // render index page with users
 router.get("/", (req, res) => {
   db.User.findAll({}).then(users => {
@@ -67,7 +69,6 @@ router.get("/shift", (req, res) => {
         if (instancesObj.instance.length > 0) {
           lastTimeOut =
             instancesObj.instance[instancesObj.instance.length - 1].timeOut;
-          console.log(lastTimeOut);
         } else {
           lastTimeOut = "---";
         }
