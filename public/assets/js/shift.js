@@ -9,8 +9,11 @@ const newProjectBtnEl = $(".newProjectBtn");
 const projectDropDownListEl = $(".projectDropDownListEl");
 const endShiftButtonEl = $(".endShiftButtonEl");
 const projectLineItem = $(".histBtn");
-
 const userIDEl = $(".userIDEl");
+
+if (lineTimeStartEl.text().length === 19) {
+  startButtonEl.hide();
+}
 
 //GLOBAL VARIABLES
 const time = moment();
@@ -19,7 +22,7 @@ const timeFormatted = time.format("YYYY-MM-DD HH:mm:ss");
 //FUNCTION OF THE START BUTTON
 startButtonEl.on("click", event => {
   event.preventDefault();
-
+  startButtonEl.hide("medium");
   lineTimeStartEl.text(timeFormatted);
 });
 
@@ -35,7 +38,21 @@ endButtonEl.on("click", event => {
     timeIn: lineTimeStartEl.text(),
     timeOut: lineTimeEndEl.text()
   };
-
+  if (!instanceObject.projectId) {
+    lineTimeEndEl.text("---");
+    swal({
+      icon: "error",
+      title: "Please Choose Valid Project"
+    });
+    return;
+  } else if (instanceObject.timeIn === "---") {
+    lineTimeEndEl.text("---");
+    swal({
+      icon: "error",
+      title: "Please Start Shift"
+    });
+    return;
+  }
   //NOW CREATE A POST REQUEST
   postRequest(instanceObject);
 });
@@ -44,37 +61,28 @@ function postRequest(instanceObject) {
   $.post("/api/newInstance", instanceObject, () => {
     location.reload();
   });
-
-  prePopulateNextTask();
-}
-
-function prePopulateNextTask() {
-  lineTimeEndEl.text("click -->");
-  // POPULATES THE START TIME OF THE NEW, NOW CURRENT TASK
-  lineTimeStartEl.text(moment().format("YYYY-MM-DD HH:mm:ss"));
 }
 
 //FUNCTION FOR NEW PROJECT ADD
 newProjectBtnEl.on("click", event => {
   event.preventDefault();
-  //front end team to match id for submit button
   const newProject = {
     projectNumber: billingNumEl.val().trim(),
     projectName: newProjectNameEl.val().trim()
   };
   if (newProject.projectNumber === "" || newProject.projectName === "") {
-    alert("Please enter a valid Project name or a valid project Number");
+    swal({
+      icon: "error",
+      title: "Please Enter a Valid Project Name or a Valid Project Number"
+    });
     return;
   }
 
   $.post("/api/newProject", newProject).then(data => {
-    console.log(data.id);
     $.get("/api/project/" + data.id).then(result => {
-      console.log(result);
       projectLineItem.text(result.projectName);
       projectLineItem.attr("id", result.id);
     });
-    // location.reload();
   });
 });
 
@@ -101,13 +109,10 @@ projectDropDownListEl.on("click", event => {
   projectLineItem.attr("id", renderedProjectID);
 });
 
-//FUNCTION FOR THE END SHIFT BUTTON
-
+//FUNCTION FOR THE CHART TOTALS BUTTON
 endShiftButtonEl.on("click", event => {
   event.preventDefault();
   const deltaT = data => {
-    console.log(data);
-
     for (let i = 0; i < data.length; i++) {
       const instanceElement = data[i];
       const timeIn = instanceElement.timeIn;
@@ -117,7 +122,6 @@ endShiftButtonEl.on("click", event => {
       const timeSpent = time2.diff(time1, "hours", true);
       instanceElement.timeSpent = timeSpent;
     }
-    console.log(data);
   };
   //GET the data object from the db by calling a get request on the instances
   const activeUser = userIDEl.attr("id");
@@ -163,22 +167,24 @@ endShiftButtonEl.on("click", event => {
         timeSpent: timeSpent.toFixed(2)
       };
       dataArr.push(newObj);
-      x.push(mergedArray[i].projectName);
+      x.push(
+        `${mergedArray[i].projectName} ${parseFloat(timeSpent.toFixed(2))} hrs`
+      );
       y.push(parseFloat(timeSpent.toFixed(2)));
     }
-    console.log(dataArr);
     chartIt(x, y);
   }
 
-  //START CHART FUNCTION
-  //data arrays:
-
-  //call my function
-
-  //define my function
   function chartIt(xLabels, yData) {
-    console.log(xLabels);
-    console.log(yData);
+    const colors = [];
+    for (let i = 0; i < xLabels.length; i++) {
+      const o = Math.round,
+        r = Math.random,
+        s = 255;
+      const color =
+        "rgb(" + o(r() * s) + "," + o(r() * s) + "," + o(r() * s) + ")";
+      colors.push(color);
+    }
     const ctx = document.getElementById("myChart").getContext("2d");
     const myChart = new Chart(ctx, {
       type: "doughnut",
@@ -188,47 +194,34 @@ endShiftButtonEl.on("click", event => {
           {
             label: "Shift Time",
             data: yData,
-            backgroundColor: [],
+            backgroundColor: colors,
             borderWidth: 1
           }
         ]
       },
       options: {
+        tooltips: {
+          titleFontSize: 16,
+          bodyFontSize: 16,
+          callbacks: {
+            label: function(tooltipItems, data) {
+              return data.labels[tooltipItems.index];
+            }
+          }
+        },
+        legend: {
+          labels: {
+            fontSize: 24
+          }
+        },
         scales: {
           yAxes: [
             {
-              label: "Shift Time",
-              data: yData,
-              backgroundColor: [
-                // "rgba(255, 99, 132, 0.2)",
-                // "rgba(54, 162, 235, 0.2)",
-                // "rgba(255, 206, 86, 0.2)",
-                // "rgba(75, 192, 192, 0.2)",
-                // "rgba(153, 102, 255, 0.2)",
-                // "rgba(255, 159, 64, 0.2)"
-              ],
-              borderColor: [
-                // "rgba(255, 99, 132, 1)",
-                // "rgba(54, 162, 235, 1)",
-                // "rgba(255, 206, 86, 1)",
-                // "rgba(75, 192, 192, 1)",
-                // "rgba(153, 102, 255, 1)",
-                // "rgba(255, 159, 64, 1)"
-              ],
-              borderWidth: 1
+              ticks: {
+                display: false
+              }
             }
           ]
-        },
-        options: {
-          scales: {
-            yAxes: [
-              {
-                ticks: {
-                  beginAtZero: true
-                }
-              }
-            ]
-          }
         }
       }
     });

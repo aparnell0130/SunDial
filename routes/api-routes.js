@@ -25,7 +25,7 @@ router.get("/api/users", (req, res) => {
   });
 });
 
-router.get("/api/:id", (req, res) => {
+router.get("/api/user/:id", (req, res) => {
   db.User.findOne({
     where: {
       id: req.params.id
@@ -112,12 +112,36 @@ router.post("/api/newInstance", (req, res) => {
 
 // //GET INSTANCES FOR END SHIFT BUTTON BY USER (WE WILL NEED TO FOCUS THIS TO FILTER ALSO BY DAY)
 router.get("/api/chartingInstances/:activeUser", (req, res) => {
+  console.log(req.params.activeUser);
   db.Instance.findAll({
     where: {
       UserId: req.params.activeUser,
       timeIn: {
         [Op.like]: currentDay + "%"
       }
+    },
+    include: [db.Project]
+  }).then(instancesData => {
+    const instancesObj = {
+      instance: instancesData.map(data => {
+        return {
+          id: data.id,
+          projectName: data.Project.projectName,
+          ProjectId: data.ProjectId,
+          UserId: data.UserId,
+          timeIn: data.timeIn,
+          timeOut: data.timeOut
+        };
+      })
+    };
+    return res.json(instancesObj.instance);
+  });
+});
+router.get("/api/chartingInstances/all/:activeUser", (req, res) => {
+  console.log(req.params.activeUser);
+  db.Instance.findAll({
+    where: {
+      UserId: req.params.activeUser
     },
     include: [db.Project]
   }).then(instancesData => {
