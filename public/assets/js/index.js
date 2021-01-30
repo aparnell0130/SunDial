@@ -15,10 +15,16 @@ userSubmitEl.on("click", event => {
     //   created_at: new Date()
   };
   if (newUser.firstName.length === 0) {
-    alert("Please Enter First Name");
+    swal({
+      icon: "error",
+      title: "Please Enter First Name"
+    });
     return;
   } else if (newUser.lastName.length === 0) {
-    alert("Please Enter Last Name");
+    swal({
+      icon: "error",
+      title: "Please Enter Last Name"
+    });
     return;
   }
 

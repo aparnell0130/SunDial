@@ -75,7 +75,7 @@ newProjectBtnEl.on("click", event => {
   if (newProject.projectNumber === "" || newProject.projectName === "") {
     swal({
       icon: "error",
-      title: "Please enter a valid Project name or a valid project Number"
+      title: "Please Enter a Valid Project Name or a Valid Project Number"
     });
     return;
   }
