@@ -1,7 +1,7 @@
 {{>navbar}}
 
 
-<div class="col-md-7 mx-auto col-12 px-0 pt-3">
+<div class="col-md-7 col-12 mx-auto px-0 pt-3">
   {{>header title = "SunDial"}}
 
   <div class="mb-3 pl-1">
@@ -17,10 +17,10 @@
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">PROJECT NAME</th>
+        <th class="pl-0" scope="col">PROJECT NAME</th>
         <th scope="col">TIME START</th>
         <th scope="col">TIME END</th>
-        <th scope="col">TIME SPENT</th>
+        <th class="pr-0" scope="col">TIME SPENT</th>
       </tr>
     </thead>
     <tbody id="instanceData">
@@ -29,7 +29,7 @@
         <td>{{projectName}}</td>
         <td data-timein="{{timeIn}}">{{timeIn}}</td>
         <td data-timeout="{{timeOut}}">{{timeOut}}</td>
-        <td class="timeSpent"></td>
+        <td class="pr-0 timeSpent"></td>
       </tr>
       {{/each}}
       <tr>
@@ -114,12 +114,12 @@
         {{!-- add dynamic value of start time --}}
         <td class="pr-0 pl-2 lineTimeStartEl">{{lastTimeOut}}</td>
         <td class="px-0 lineTimeEndEl"> --- </td>
-        <td class="px-0"><button type="button" class="px-2 mr-1 py-1 mt-1 btn endButtonEl">END/NEXT</button></td>
+        <td class="px-0"><button type="button" class="px-2 py-1 mt-1 btn endButtonEl">NEXT</button></td>
       </tr>
     </tbody>
   </table>
 
-    <div class="mx-auto text-center">
+    <div class="text-center">
       <button type="button" class="mx-auto px-5 btn btn-info endShiftButtonEl">CHART TOTALS</button>
     </div>
   
