@@ -41,11 +41,17 @@ endButtonEl.on("click", event => {
   };
   if (!instanceObject.projectId) {
     lineTimeEndEl.text("---");
-    alert("Please Choose Valid Project");
+    swal({
+      icon: "error",
+      title: "Please Choose Valid Project"
+    });
     return;
   } else if (instanceObject.timeIn === "---") {
     lineTimeEndEl.text("---");
-    alert("Please Start Shift");
+    swal({
+      icon: "error",
+      title: "Please Start Shift"
+    });
     return;
   }
   //NOW CREATE A POST REQUEST
@@ -67,7 +73,10 @@ newProjectBtnEl.on("click", event => {
     projectName: newProjectNameEl.val().trim()
   };
   if (newProject.projectNumber === "" || newProject.projectName === "") {
-    alert("Please enter a valid Project name or a valid project Number");
+    swal({
+      icon: "error",
+      title: "Please enter a valid Project name or a valid project Number"
+    });
     return;
   }
 
