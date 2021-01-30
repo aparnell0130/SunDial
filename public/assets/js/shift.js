@@ -220,7 +220,7 @@ endShiftButtonEl.on("click", event => {
         },
         legend: {
           labels: {
-            fontSize: 16
+            fontSize: 24
           }
         },
         scales: {

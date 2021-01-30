@@ -1,17 +1,17 @@
 {{>navbar}}
 
 
-<div class="col-md-7 col-12 mx-auto px-0">
+<div class="col-md-7 mx-auto col-12 px-0 pt-3">
+  {{>header title = "SunDial"}}
 
-  {{>header title = "SunDial Shift"}}
+  <div class="mb-3 pl-1">
+    {{#each user}}
+    <h1 id={{id}} class="pl-1 py-0 userIDEl">{{firstName}} {{lastName}}</h1>
+    {{/each}}
+  </div>
 
-  {{#each user}}
-  <h1 id={{id}} class="userIDEl">{{firstName}} {{lastName}}</h1>
-  {{/each}}
-
-
-  <div class="container row">
-    <button type="button" class="mx-2 btn btn-success startButtonEl">START SHIFT</button>
+  <div class="my-2">
+    <button type="button" class="ml-1 px-3 btn startButtonEl">START SHIFT</button>
   </div>
 
   <table class="table">
@@ -35,14 +35,40 @@
       <tr>
         <th scope="row">
           <div class="row g-3 align-items-center">
-            <div class="col-auto">
-              <div class="btn-group">
-                <!-- START MODAL COMPONENT -->
-                {{!-- MODAL BUTTON START--}}
-                <div class="text-center">
-                  <button type="button" class="btn btn-primary ml-0" data-toggle="modal"
-                    data-target="#exampleModal" data-whatever="@getbootstrap">New</button>
+
+            <div class="btn-group">
+
+              <!-- START MODAL COMPONENT -->
+              {{!-- MODAL BUTTON START--}}
+              <div>
+
+                {{!-- PROJECT HISTORY DROPDOWN --}}
+                {{!-- BUTTONS WITH DROPDOWNS START --}}
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                  
+                    <button class="ml-2 rounded projectLineItem histBtn btn btn-outline-secondary dropdown-toggle" type="button"
+                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose Project</button>
+                      
+                    <div class="dropdown-menu">
+                      <ul class="projectDropDownListEl">
+                        {{#each projects}}
+                        <li class="dropdown-item" id={{id}}>
+                          {{projectName}}
+                        </li>
+                        {{/each}}
+                      </ul>
+                    </div>
+
+                  </div>
                 </div>
+                {{!-- BUTTONS WITH DROPDOWNS END --}}
+
+                <div class="text-center">
+                  <button type="button" class="createBtn ml-2 btn py-1 px-5" data-toggle="modal"
+                    data-target="#exampleModal" data-whatever="@getbootstrap">Create</button>
+                </div>
+
                 {{!-- MODAL BUTTON END--}}
                 {{!-- ACTUAL MODAL START--}}
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
@@ -69,7 +95,8 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="project-submit" type="button" data-dismiss="modal" class="btn btn-primary newProjectBtn">Submit</button>
+                        <button id="project-submit" type="button" data-dismiss="modal"
+                          class="btn modalBtn newProjectBtn">Submit</button>
                       </div>
                     </div>
                   </div>
@@ -77,43 +104,27 @@
                 {{!-- ACTUAL MODAL END--}}
                 <!-- END Modal -->
 
-                {{!-- PROJECT HISTORY DROPDOWN --}}
-                {{!-- BUTTONS WITH DROPDOWNS START --}}
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <button class="projectLineItem histBtn btn btn-outline-secondary dropdown-toggle" type="button"
-                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Project History</button>
-                    <div class="dropdown-menu">
-                      <ul class="projectDropDownListEl">
-                        {{#each projects}}
-                        <li class="dropdown-item" id={{id}}>
-                          {{projectName}}
-                        </li>
-                        {{/each}}
-                      </ul>
-                    </div>
-
-                  </div>
-                </div>
-                {{!-- BUTTONS WITH DROPDOWNS END --}}
               </div>
-              {{!-- BUTTONS WITH DROPDOWNS END --}}
-
             </div>
+            {{!-- BUTTONS WITH DROPDOWNS END --}}
+
+
           </div>
         </th>
         {{!-- add dynamic value of start time --}}
-        <td class="lineTimeStartEl">{{lastTimeOut}}</td>
-        <td class="lineTimeEndEl"> --- </td>
-        <td><button type="button" class="btn btn-danger endButtonEl">END TASK</button></td>
+        <td class="pr-0 pl-2 lineTimeStartEl">{{lastTimeOut}}</td>
+        <td class="px-0 lineTimeEndEl"> --- </td>
+        <td class="px-0"><button type="button" class="px-2 mr-1 py-1 mt-1 btn endButtonEl">END/NEXT</button></td>
       </tr>
     </tbody>
   </table>
-  <div class="container row">
-    <button type="button" class="mx-2 btn btn-danger endShiftButtonEl">END SHIFT</button>
-  </div>
+
+    <div class="mx-auto text-center">
+      <button type="button" class="mx-auto px-5 btn btn-info endShiftButtonEl">CHART TOTALS</button>
+    </div>
+  
   {{!-- START CHART --}}
   <div>
-  <canvas id="myChart" class="w-75 h-75 mx-auto mt-5"></canvas>
+    <canvas id="myChart" class="w-75 h-75 mt-5 mx-auto"></canvas>
   </div>
 </div>
