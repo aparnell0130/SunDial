@@ -102,4 +102,19 @@ router.get("/shift", (req, res) => {
   }
 });
 
+router.get("/projects", (req, res) => {
+  db.User.findAll({}).then(users => {
+    const usersObj = {
+      names: users.map(data => {
+        return {
+          id: data.id,
+          firstName: data.firstName,
+          lastName: data.lastName
+        };
+      })
+    };
+    res.render("projects", { users: usersObj.names });
+  });
+});
+
 module.exports = router;

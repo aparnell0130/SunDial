@@ -16,16 +16,12 @@ const time = moment();
 const timeFormatted = time.format("YYYY-MM-DD HH:mm:ss");
 
 //FUNCTION OF THE START BUTTON
-
 startButtonEl.on("click", event => {
   event.preventDefault();
+
   lineTimeStartEl.text(timeFormatted);
 });
 
-//TRYING TO MAKE START DISAPPEAR ON CLICK
-if (!lineTimeStartEl.empty()) {
-  startButtonEl.display = "none";
-}
 //FUNCTION OF THE END TASK BUTTON
 endButtonEl.on("click", event => {
   event.preventDefault();
@@ -211,7 +207,7 @@ endShiftButtonEl.on("click", event => {
         },
         legend: {
           labels: {
-            fontSize: 16
+            fontSize: 24
           }
         },
         scales: {
