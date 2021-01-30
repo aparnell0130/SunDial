@@ -11,6 +11,10 @@ const endShiftButtonEl = $(".endShiftButtonEl");
 const projectLineItem = $(".histBtn");
 const userIDEl = $(".userIDEl");
 
+if (lineTimeStartEl.text().length === 19) {
+  startButtonEl.hide();
+}
+
 //GLOBAL VARIABLES
 const time = moment();
 const timeFormatted = time.format("YYYY-MM-DD HH:mm:ss");
@@ -18,7 +22,7 @@ const timeFormatted = time.format("YYYY-MM-DD HH:mm:ss");
 //FUNCTION OF THE START BUTTON
 startButtonEl.on("click", event => {
   event.preventDefault();
-
+  startButtonEl.hide("medium");
   lineTimeStartEl.text(timeFormatted);
 });
 
@@ -34,7 +38,21 @@ endButtonEl.on("click", event => {
     timeIn: lineTimeStartEl.text(),
     timeOut: lineTimeEndEl.text()
   };
-
+  if (!instanceObject.projectId) {
+    lineTimeEndEl.text("---");
+    swal({
+      icon: "error",
+      title: "Please Choose Valid Project"
+    });
+    return;
+  } else if (instanceObject.timeIn === "---") {
+    lineTimeEndEl.text("---");
+    swal({
+      icon: "error",
+      title: "Please Start Shift"
+    });
+    return;
+  }
   //NOW CREATE A POST REQUEST
   postRequest(instanceObject);
 });
@@ -43,26 +61,20 @@ function postRequest(instanceObject) {
   $.post("/api/newInstance", instanceObject, () => {
     location.reload();
   });
-
-  prePopulateNextTask();
-}
-
-function prePopulateNextTask() {
-  lineTimeEndEl.text("click -->");
-  // POPULATES THE START TIME OF THE NEW, NOW CURRENT TASK
-  lineTimeStartEl.text(moment().format("YYYY-MM-DD HH:mm:ss"));
 }
 
 //FUNCTION FOR NEW PROJECT ADD
 newProjectBtnEl.on("click", event => {
   event.preventDefault();
-  //front end team to match id for submit button
   const newProject = {
     projectNumber: billingNumEl.val().trim(),
     projectName: newProjectNameEl.val().trim()
   };
   if (newProject.projectNumber === "" || newProject.projectName === "") {
-    alert("Please enter a valid Project name or a valid project Number");
+    swal({
+      icon: "error",
+      title: "Please Enter a Valid Project Name or a Valid Project Number"
+    });
     return;
   }
 
@@ -71,7 +83,6 @@ newProjectBtnEl.on("click", event => {
       projectLineItem.text(result.projectName);
       projectLineItem.attr("id", result.id);
     });
-    // location.reload();
   });
 });
 
@@ -98,8 +109,7 @@ projectDropDownListEl.on("click", event => {
   projectLineItem.attr("id", renderedProjectID);
 });
 
-//FUNCTION FOR THE END SHIFT BUTTON
-
+//FUNCTION FOR THE CHART TOTALS BUTTON
 endShiftButtonEl.on("click", event => {
   event.preventDefault();
   const deltaT = data => {
@@ -165,12 +175,6 @@ endShiftButtonEl.on("click", event => {
     chartIt(x, y);
   }
 
-  //START CHART FUNCTION
-  //data arrays:
-
-  //call my function
-
-  //define my function
   function chartIt(xLabels, yData) {
     const colors = [];
     for (let i = 0; i < xLabels.length; i++) {
