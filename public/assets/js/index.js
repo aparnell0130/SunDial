@@ -4,14 +4,25 @@ const userListEl = $(".userInfo");
 
 userSubmitEl.on("click", event => {
   event.preventDefault();
+  function capCharZero(string) {
+    return string
+      .toLowerCase()
+      .split(" ")
+      .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+      .join(" ");
+  }
   //front end team to match id for submit button
   const newUser = {
-    firstName: $("#first_name")
-      .val()
-      .trim(),
-    lastName: $("#last_name")
-      .val()
-      .trim()
+    firstName: capCharZero(
+      $("#first_name")
+        .val()
+        .trim()
+    ),
+    lastName: capCharZero(
+      $("#last_name")
+        .val()
+        .trim()
+    )
     //   created_at: new Date()
   };
   if (newUser.firstName.length === 0) {
