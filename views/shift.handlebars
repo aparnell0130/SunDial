@@ -25,7 +25,7 @@
     </thead>
     <tbody id="instanceData">
       {{#each instances}}
-      <tr>
+      <tr id="{{id}}">
         <td>{{projectName}}</td>
         <td data-timein="{{timeIn}}">{{timeIn}}</td>
         <td data-timeout="{{timeOut}}">{{timeOut}}</td>
@@ -40,7 +40,7 @@
                 <!-- START MODAL COMPONENT -->
                 {{!-- MODAL BUTTON START--}}
                 <div class="text-center">
-                  <button type="button" class="btn btn-primary ml-0 startButtonEl" data-toggle="modal"
+                  <button type="button" class="btn btn-primary ml-0" data-toggle="modal"
                     data-target="#exampleModal" data-whatever="@getbootstrap">New</button>
                 </div>
                 {{!-- MODAL BUTTON END--}}
@@ -69,7 +69,7 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="project-submit" type="button" class="btn btn-primary newProjectBtn">Submit</button>
+                        <button id="project-submit" type="button" data-dismiss="modal" class="btn btn-primary newProjectBtn">Submit</button>
                       </div>
                     </div>
                   </div>
@@ -113,5 +113,7 @@
     <button type="button" class="mx-2 btn btn-danger endShiftButtonEl">END SHIFT</button>
   </div>
   {{!-- START CHART --}}
-  <canvas id="myChart"></canvas>
+  <div>
+  <canvas id="myChart" class="w-75 h-75 mx-auto mt-5"></canvas>
+  </div>
 </div>
