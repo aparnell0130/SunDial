@@ -10,12 +10,43 @@
       Select User
     </button>
     <div class="collapse navbar-collapse" id="codebrainery-toggle-nav">
-      <ul class="mx-2 list-group userListEl list-group-flush">
+      <ul class="mx-2 list-group userProjects list-group-flush">
         {{#each users}}
-        <li data-id={{id}} class="list-group-item userInfo">{{firstName}} {{lastName}}</li>
+        <li data-id={{id}} class="list-group-item userInfoProjects">{{firstName}} {{lastName}}</li>
         {{/each}}
       </ul>
     </div>
   </nav> <!-- close navbar nav -->
-  
+
+
+  <div class="mx-auto text-center">
+    {{#each user}}
+    <h1 id={{id}} class="my-0 py-0 mx-auto userIDEl">{{firstName}} {{lastName}}</h1>
+    {{/each}}
+  </div>
+
+
+  <div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">PROJECT NAME</th>
+          <th scope="col">TIME START</th>
+          <th scope="col">TIME END</th>
+          <th scope="col">TIME SPENT</th>
+        </tr>
+      </thead>
+      <tbody id="instanceDataProjects">
+        {{#each instances}}
+        <tr id="{{id}}">
+          <td>{{projectName}}</td>
+          <td data-timein="{{timeIn}}">{{timeIn}}</td>
+          <td data-timeout="{{timeOut}}">{{timeOut}}</td>
+          <td class="timeSpentProjects"></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
 </div>
