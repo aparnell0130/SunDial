@@ -11,6 +11,11 @@ const endShiftButtonEl = $(".endShiftButtonEl");
 const projectLineItem = $(".histBtn");
 const userIDEl = $(".userIDEl");
 
+if (lineTimeStartEl.text().length === 19) {
+  startButtonEl.hide();
+}
+console.log(lineTimeStartEl.text().length);
+
 //GLOBAL VARIABLES
 const time = moment();
 const timeFormatted = time.format("YYYY-MM-DD HH:mm:ss");
@@ -18,7 +23,7 @@ const timeFormatted = time.format("YYYY-MM-DD HH:mm:ss");
 //FUNCTION OF THE START BUTTON
 startButtonEl.on("click", event => {
   event.preventDefault();
-
+  startButtonEl.hide("medium");
   lineTimeStartEl.text(timeFormatted);
 });
 
@@ -71,7 +76,6 @@ newProjectBtnEl.on("click", event => {
       projectLineItem.text(result.projectName);
       projectLineItem.attr("id", result.id);
     });
-    // location.reload();
   });
 });
 
