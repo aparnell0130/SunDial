@@ -21,3 +21,7 @@ li{
 .homeTit {
   font-family: 'Yanone Kaffeesatz', sans-serif !important;
 }
+
+.swal-overlay {
+  background-color: rgba(250, 146, 127, 0.75);
+}
