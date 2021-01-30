@@ -13,11 +13,69 @@ li{
 .navbar {
   border-radius: 0px 0px 4px 4px;
 }
-
 .selUser {
+  border-radius: 4px;
+  border: none !important;
+}
+.userDrop {
+  border-radius: 4px;
+}
+
+.dropUser {
   border-radius: 5px !important;
 }
 
 .homeTit {
   font-family: 'Yanone Kaffeesatz', sans-serif !important;
+}
+
+.histBtn, .startButtonEl, .createBtn {
+  width: 145px !important;
+}
+
+
+.startButtonEl {
+  background-color: rgb(42, 180, 111) !important;
+  color: white !important;
+}
+
+.histBtn {
+  color: rgb(0, 0, 0) !important;
+}
+
+.createBtn {
+  background-color: rgb(190, 103, 230) !important;
+  color: white !important;
+}
+.createBtn:hover {
+  background-color: rgb(168, 92, 204) !important;
+}
+.endButtonEl {
+  background-color: rgb(221, 128, 84) !important;
+  color: white !important;
+}
+.endButtonEl:hover {
+  background-color: rgb(194, 117, 82) !important;
+}
+/* .endShiftButtonEl {
+  background-color: rgb(40, 168, 218) !important;
+  color: white !important;
+} */
+
+.selUser {
+  background-color: rgb(42, 180, 111) !important;
+  color: white !important;
+}
+
+/* .makeBtn {
+
+} */
+
+.modalBtn {
+  background-color: rgb(42, 180, 111) !important;
+  color: white !important;
+}
+
+.modalBtn:hover, .selUser:hover, .startButtonEl:hover {
+  background-color: rgb(47, 151, 99) !important;
 }
