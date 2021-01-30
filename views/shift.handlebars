@@ -4,14 +4,14 @@
 <div class="col-md-7 mx-auto col-12 px-0 pt-3">
   {{>header title = "SunDial"}}
 
-  <div class="mx-auto text-center">
+  <div class="mb-3 pl-1">
     {{#each user}}
-    <h1 id={{id}} class="my-0 py-0 mx-auto userIDEl">{{firstName}} {{lastName}}</h1>
+    <h1 id={{id}} class="pl-1 py-0 userIDEl">{{firstName}} {{lastName}}</h1>
     {{/each}}
   </div>
 
-  <div class="mx-auto text-center my-3">
-    <button type="button" class="mx-auto px-5 mb-2 btn btn-success startButtonEl">START SHIFT</button>
+  <div class="my-2">
+    <button type="button" class="ml-1 px-3 btn startButtonEl">START SHIFT</button>
   </div>
 
   <table class="table">
@@ -46,8 +46,10 @@
                 {{!-- BUTTONS WITH DROPDOWNS START --}}
                 <div class="input-group">
                   <div class="input-group-prepend">
-                    <button class="projectLineItem histBtn btn btn-outline-secondary dropdown-toggle" type="button"
+                  
+                    <button class="ml-2 rounded projectLineItem histBtn btn btn-outline-secondary dropdown-toggle" type="button"
                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose Project</button>
+                      
                     <div class="dropdown-menu">
                       <ul class="projectDropDownListEl">
                         {{#each projects}}
@@ -63,7 +65,7 @@
                 {{!-- BUTTONS WITH DROPDOWNS END --}}
 
                 <div class="text-center">
-                  <button type="button" class="btn btn-primary px-5" data-toggle="modal"
+                  <button type="button" class="createBtn ml-2 btn py-1 px-5" data-toggle="modal"
                     data-target="#exampleModal" data-whatever="@getbootstrap">Create</button>
                 </div>
 
@@ -94,7 +96,7 @@
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button id="project-submit" type="button" data-dismiss="modal"
-                          class="btn btn-primary newProjectBtn">Submit</button>
+                          class="btn modalBtn newProjectBtn">Submit</button>
                       </div>
                     </div>
                   </div>
@@ -112,13 +114,13 @@
         {{!-- add dynamic value of start time --}}
         <td class="pr-0 pl-2 lineTimeStartEl">{{lastTimeOut}}</td>
         <td class="px-0 lineTimeEndEl"> --- </td>
-        <td class="px-0"><button type="button" class="px-1 py-4 mt-1 btn btn-danger endButtonEl">END/NEXT</button></td>
+        <td class="px-0"><button type="button" class="px-2 mr-1 py-1 mt-1 btn endButtonEl">END/NEXT</button></td>
       </tr>
     </tbody>
   </table>
 
     <div class="mx-auto text-center">
-      <button type="button" class="mx-auto px-5 btn btn-danger endShiftButtonEl">CHART TOTALS</button>
+      <button type="button" class="mx-auto px-5 btn btn-info endShiftButtonEl">CHART TOTALS</button>
     </div>
   
   {{!-- START CHART --}}
