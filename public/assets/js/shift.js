@@ -14,7 +14,6 @@ const userIDEl = $(".userIDEl");
 if (lineTimeStartEl.text().length === 19) {
   startButtonEl.hide();
 }
-console.log(lineTimeStartEl.text().length);
 
 //GLOBAL VARIABLES
 const time = moment();
@@ -67,7 +66,6 @@ function postRequest(instanceObject) {
 //FUNCTION FOR NEW PROJECT ADD
 newProjectBtnEl.on("click", event => {
   event.preventDefault();
-  //front end team to match id for submit button
   const newProject = {
     projectNumber: billingNumEl.val().trim(),
     projectName: newProjectNameEl.val().trim()
@@ -111,8 +109,7 @@ projectDropDownListEl.on("click", event => {
   projectLineItem.attr("id", renderedProjectID);
 });
 
-//FUNCTION FOR THE END SHIFT BUTTON
-
+//FUNCTION FOR THE CHART TOTALS BUTTON
 endShiftButtonEl.on("click", event => {
   event.preventDefault();
   const deltaT = data => {
@@ -178,12 +175,6 @@ endShiftButtonEl.on("click", event => {
     chartIt(x, y);
   }
 
-  //START CHART FUNCTION
-  //data arrays:
-
-  //call my function
-
-  //define my function
   function chartIt(xLabels, yData) {
     const colors = [];
     for (let i = 0; i < xLabels.length; i++) {

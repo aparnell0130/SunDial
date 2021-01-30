@@ -11,7 +11,6 @@ userSubmitEl.on("click", event => {
       .map(s => s.charAt(0).toUpperCase() + s.substring(1))
       .join(" ");
   }
-  //front end team to match id for submit button
   const newUser = {
     firstName: capCharZero(
       $("#first_name")
@@ -23,7 +22,6 @@ userSubmitEl.on("click", event => {
         .val()
         .trim()
     )
-    //   created_at: new Date()
   };
   if (newUser.firstName.length === 0) {
     swal({
@@ -49,9 +47,6 @@ userSubmitEl.on("click", event => {
 //Functionality to redirect to shift page when selecting a user
 userListEl.on("click", function(event) {
   event.preventDefault();
-  // event.stopPropagation();
-  // const renderedUser = $(event.target).text();
   const userId = $(this).data("id");
-  console.log(userId);
   window.location.replace("/shift?userId=" + userId);
 });
