@@ -38,7 +38,9 @@ router.get("/api/user/:id", (req, res) => {
 router.post("/api/newUser", (req, res) => {
   db.User.create({
     firstName: req.body.firstName,
-    lastName: req.body.lastName
+    lastName: req.body.lastName,
+    email: req.body.email,
+    password: req.body.password
   })
     .then(newUser => {
       res.json(newUser);
