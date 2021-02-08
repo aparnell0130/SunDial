@@ -34,7 +34,6 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
     integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
     crossorigin="anonymous"></script>
-
 </body>
 {{!-- JQUERY LINK --}}
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -46,5 +45,15 @@
   <script type="text/javascript" src="/assets/js/shift.js"></script>
   <script type="text/javascript" src="/assets/js/projects.js"></script>
 
+  <script>
+    $("#burglars").on("click", function (event) {
+      // Make sure to preventDefault on a submit event.
+      event.preventDefault();
+      //Resets 1X gif to play again on click
+      var el = $("#animationTime");
+      el.attr("src", "");
+      el.attr("src", "/assets/img/NAVBTNGIF.gif");
+    });
+  </script>
 
 </html>
