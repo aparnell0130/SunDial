@@ -1,2 +1,5 @@
 models/index.js
 node_modules
+public/assets/js/index.min.js
+public/assets/js/projects.min.js
+public/assets/js/shift.min.js
