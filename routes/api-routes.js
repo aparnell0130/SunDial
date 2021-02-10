@@ -2,7 +2,7 @@
 const { Op } = require("sequelize");
 const db = require("../models");
 const express = require("express");
-
+const passport = require("../config/passport");
 const router = express.Router();
 /*=====================Get Current Day=====================*/
 const date = new Date();
@@ -23,6 +23,10 @@ router.get("/api/users", (req, res) => {
     };
     res.json({ users: usersObj.names });
   });
+});
+
+router.get("/api/login", passport.authenticate("local"), (req, res) => {
+  res.json(req.user);
 });
 
 router.get("/api/user/:id", (req, res) => {
