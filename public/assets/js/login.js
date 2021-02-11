@@ -28,9 +28,8 @@ $(document).ready(() => {
       email: email,
       password: password
     })
-      .then(() => {
-        window.location.replace("/");
-        // If there's an error, log the error
+      .then(userInfo => {
+        window.location.replace("/shift?userId=" + userInfo.id);
       })
       .catch(err => {
         console.log(err);

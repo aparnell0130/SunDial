@@ -30,7 +30,7 @@ router.get("/", (req, res) => {
 
 router.get("/login", (req, res) => {
   if (req.user) {
-    res.redirect("/");
+    res.redirect("/shift");
   }
   res.render("login");
 });
