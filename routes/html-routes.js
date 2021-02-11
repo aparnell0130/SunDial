@@ -2,6 +2,7 @@
 const db = require("../models");
 const { Op } = require("sequelize");
 const express = require("express");
+const isAuthenticated = require("../config/middleware/isAuthenticated");
 /*=====================Get Current Day=====================*/
 const date = new Date();
 const today = new Date(date);
@@ -26,8 +27,16 @@ router.get("/", (req, res) => {
     res.render("index", { users: usersObj.names });
   });
 });
+
+router.get("/login", (req, res) => {
+  if (req.user) {
+    res.redirect("/");
+  }
+  res.render("login");
+});
+
 // render shift page with current users projects and instances
-router.get("/shift", (req, res) => {
+router.get("/shift", isAuthenticated, (req, res) => {
   const userId = req.query.userId;
   renderShift();
   async function renderShift() {
