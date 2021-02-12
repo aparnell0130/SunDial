@@ -25,7 +25,7 @@ router.get("/api/users", (req, res) => {
   });
 });
 
-router.get("/api/login", passport.authenticate("local"), (req, res) => {
+router.post("/api/login", passport.authenticate("local"), (req, res) => {
   res.json(req.user);
 });
 
@@ -46,13 +46,11 @@ router.post("/api/newUser", (req, res) => {
     email: req.body.email,
     password: req.body.password
   })
-    .then(newUser => {
-      res.json(newUser);
+    .then(() => {
+      res.redirect(307, "/api/login");
     })
     .catch(err => {
-      if (err) {
-        return res.status(500).json({ sucess: false });
-      }
+      res.status(401).json(err);
     });
 });
 
