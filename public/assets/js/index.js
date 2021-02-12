@@ -21,8 +21,15 @@ userSubmitEl.on("click", event => {
       $("#last_name")
         .val()
         .trim()
-    )
+    ),
+    email: $("#email")
+      .val()
+      .trim(),
+    password: $("#password")
+      .val()
+      .trim()
   };
+  console.log(newUser);
   if (newUser.firstName.length === 0) {
     swal({
       icon: "error",
@@ -33,6 +40,18 @@ userSubmitEl.on("click", event => {
     swal({
       icon: "error",
       title: "Please Enter Last Name"
+    });
+    return;
+  } else if (newUser.email.length === 0) {
+    swal({
+      icon: "error",
+      title: "Please Enter Valid Email"
+    });
+    return;
+  } else if (newUser.password.length === 0) {
+    swal({
+      icon: "error",
+      title: "Please Enter Valid Password"
     });
     return;
   }
