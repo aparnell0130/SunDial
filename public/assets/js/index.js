@@ -67,5 +67,5 @@ userSubmitEl.on("click", event => {
 userListEl.on("click", function(event) {
   event.preventDefault();
   const userId = $(this).data("id");
-  window.location.replace("/shift?userId=" + userId);
+  window.location.replace("/login?userId=" + userId);
 });
