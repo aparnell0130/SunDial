@@ -24,7 +24,7 @@ $(document).ready(() => {
 
   // loginUser does a post to our "api/login" route and if successful, redirects us the the members page
   function loginUser(email, password) {
-    $.get("/api/login", {
+    $.post("/api/login", {
       email: email,
       password: password
     })
@@ -35,4 +35,10 @@ $(document).ready(() => {
         console.log(err);
       });
   }
+  const userId = window.location.search.split("=")[1];
+  $.get("/api/user/" + userId).then(data => {
+    $("h2")
+      .text(`Welcome ${data.firstName} ${data.lastName}!`)
+      .append("<h3>Please Enter Email and Password to Login!<h3>");
+  });
 });
