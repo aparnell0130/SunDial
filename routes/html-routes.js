@@ -14,6 +14,9 @@ const router = express.Router();
 
 // render index page with users
 router.get("/", (req, res) => {
+  if (req.user) {
+    res.redirect("back");
+  }
   db.User.findAll({}).then(users => {
     const usersObj = {
       names: users.map(data => {
@@ -111,7 +114,7 @@ router.get("/shift", isAuthenticated, (req, res) => {
   }
 });
 
-router.get("/projects", (req, res) => {
+router.get("/projects", isAuthenticated, (req, res) => {
   db.User.findAll({}).then(users => {
     const usersObj = {
       names: users.map(data => {
