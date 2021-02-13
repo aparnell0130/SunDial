@@ -4,21 +4,11 @@
   {{>header title = "SunDial"}}
 
   <div>
-    <h1 id="userH1"></h1>
+    {{#each users}}
+    <h1 id="userH1" data-id={{id}} class="list-group-item">{{firstName}} {{lastName}}</h1>
+    {{/each}}
   </div>
-  <nav class="text-center navbar navbar-default mx-0 px-0">
-    <button type="button" class="py-2 col-12 navbar-toggle collapsed selUser btn btn-info text-white" data-toggle="collapse"
-      data-target="#codebrainery-toggle-nav" aria-expanded="false">
-      Select User
-    </button>
-    <div class="collapse navbar-collapse" id="codebrainery-toggle-nav">
-      <ul class="mx-2 list-group userProjects list-group-flush">
-        {{#each users}}
-        <li data-id={{id}} class="list-group-item userInfoProjects">{{firstName}} {{lastName}}</li>
-        {{/each}}
-      </ul>
-    </div>
-  </nav> <!-- close navbar nav -->
+   <!-- close navbar nav -->
 
 
   <div>

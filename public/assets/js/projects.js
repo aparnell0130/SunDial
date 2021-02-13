@@ -1,7 +1,6 @@
-const userProjects = $(".userInfoProjects");
 const instanceProjects = $("#instanceDataProjects");
 const userH1 = $("#userH1");
-userProjects.on("click", function(event) {
+userH1.load(function(event) {
   event.preventDefault();
   instanceProjects.empty();
   // userH1.empty();
@@ -29,9 +28,5 @@ userProjects.on("click", function(event) {
         </tr>`
       );
     }
-  });
-  $.get("/api/user/" + userId).then(data => {
-    console.log(data);
-    userH1.text(`${data.firstName} ${data.lastName}`);
   });
 });
