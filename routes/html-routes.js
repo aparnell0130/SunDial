@@ -115,7 +115,12 @@ router.get("/shift", isAuthenticated, (req, res) => {
 });
 
 router.get("/projects", isAuthenticated, (req, res) => {
-  db.User.findAll({}).then(users => {
+  const userId = req.user.id;
+  db.User.findAll({
+    where: {
+      id: userId
+    }
+  }).then(users => {
     const usersObj = {
       names: users.map(data => {
         return {
