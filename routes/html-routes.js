@@ -2,6 +2,7 @@
 const db = require("../models");
 const { Op } = require("sequelize");
 const express = require("express");
+const isAuthenticated = require("../config/middleware/isAuthenticated");
 /*=====================Get Current Day=====================*/
 const date = new Date();
 const today = new Date(date);
@@ -13,6 +14,9 @@ const router = express.Router();
 
 // render index page with users
 router.get("/", (req, res) => {
+  if (req.user) {
+    res.redirect("back");
+  }
   db.User.findAll({}).then(users => {
     const usersObj = {
       names: users.map(data => {
@@ -26,8 +30,16 @@ router.get("/", (req, res) => {
     res.render("index", { users: usersObj.names });
   });
 });
+
+router.get("/login", (req, res) => {
+  if (req.user) {
+    res.redirect("/shift");
+  }
+  res.render("login");
+});
+
 // render shift page with current users projects and instances
-router.get("/shift", (req, res) => {
+router.get("/shift", isAuthenticated, (req, res) => {
   const userId = req.query.userId;
   renderShift();
   async function renderShift() {
@@ -102,8 +114,13 @@ router.get("/shift", (req, res) => {
   }
 });
 
-router.get("/projects", (req, res) => {
-  db.User.findAll({}).then(users => {
+router.get("/projects", isAuthenticated, (req, res) => {
+  const userId = req.user.id;
+  db.User.findAll({
+    where: {
+      id: userId
+    }
+  }).then(users => {
     const usersObj = {
       names: users.map(data => {
         return {

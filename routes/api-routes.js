@@ -2,7 +2,7 @@
 const { Op } = require("sequelize");
 const db = require("../models");
 const express = require("express");
-
+const passport = require("../config/passport");
 const router = express.Router();
 /*=====================Get Current Day=====================*/
 const date = new Date();
@@ -25,6 +25,10 @@ router.get("/api/users", (req, res) => {
   });
 });
 
+router.post("/api/login", passport.authenticate("local"), (req, res) => {
+  res.json(req.user);
+});
+
 router.get("/api/user/:id", (req, res) => {
   db.User.findOne({
     where: {
@@ -42,13 +46,11 @@ router.post("/api/newUser", (req, res) => {
     email: req.body.email,
     password: req.body.password
   })
-    .then(newUser => {
-      res.json(newUser);
+    .then(() => {
+      res.redirect(307, "/api/login");
     })
     .catch(err => {
-      if (err) {
-        return res.status(500).json({ sucess: false });
-      }
+      res.status(401).json(err);
     });
 });
 
